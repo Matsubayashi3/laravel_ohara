@@ -4,6 +4,7 @@
 <!-- ヘッダーの読み込み -->
 <?php include 'header.php' ?>
 
+
 <!-- ページ -->
 <link rel="stylesheet" href="style\login.css">
 <div class="container">
@@ -31,3 +32,5 @@
         </form>
     </div>
 </div>
+<!-- フッターの読み込み -->
+<?php include 'footer.php' ?>
