@@ -1,8 +1,15 @@
+<!-- 共通ブロック -->
+<!-- セッションの開始 -->
+<?php session_start(); ?>
+<!-- ヘッダーの読み込み -->
+<?php include 'header.php' ?>
+
 <!-- ページ -->
 <link rel="stylesheet" href="style\login.css">
 <div class="container">
+    <img class="icon" src="image/くちぱっち背景透明.png" alt="アイコン画像">
     <div class="login-form">
-        <h1>ログイン画面</h1>
+        <h1>ログイン</h1>
 
         <form action="login-output.php" method="post">
             <div class="form-group">
