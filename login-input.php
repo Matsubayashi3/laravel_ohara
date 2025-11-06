@@ -9,6 +9,7 @@
 <!-- ページ -->
 <link rel="stylesheet" href="style\login.css">
 <div class="container">
+    <img class="icon" src="image/くちぱっち背景透明.png" alt="アイコン画像">
     <div class="login-form">
         <h1>ログイン画面</h1>
         <div class="instructions">
