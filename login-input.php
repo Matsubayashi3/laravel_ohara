@@ -1,3 +1,11 @@
+<!-- 共通ブロック -->
+<!-- セッションの開始 -->
+<?php session_start(); ?>
+<!-- ヘッダーの読み込み -->
+<?php include 'header.php' ?>
+<!-- DB接続ファイルの読み込み -->
+<?php include 'dbconect.php' ?>
+
 <!-- ページ -->
 <link rel="stylesheet" href="style\login.css">
 <div class="container">
@@ -25,3 +33,6 @@
             </div>
         </div>
     </div>
+</div>
+<!-- フッターの読み込み -->
+<?php include 'footer.php' ?>
