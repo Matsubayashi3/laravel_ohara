@@ -3,8 +3,7 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background-color: #FFD700;
-        padding: 20px;
+        background-color: #FCC800;
     }
 
     .login-form {
@@ -51,7 +50,7 @@
     .login-button {
         width: 300px;
         padding: 10px;
-        background-color: #E67E22;
+        background-color: #DD6E35;
         color: white;
         border: none;
         font-size: 16px;
@@ -65,7 +64,7 @@
     }
 
     .register-link a {
-        color: #E67E22;
+        color: #DD6E35;
         text-decoration: none;
     }
 
