@@ -30,7 +30,7 @@
 
             </form>
             <div class="register-link">
-                <a href="register.php">新規登録</a>
+                <a href="register-input.php">新規登録</a>
             </div>
         </div>
     </div>
