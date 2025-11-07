@@ -17,24 +17,17 @@
         background-color: #FCC800;
     }
 
+    .eye-g {
+        display: grid;
+        grid-auto-flow: column;
+    }
+
     .eye {
         width: 40px;
         height: 40px;
+        margin: 40px 100px;
         border-radius: 50%;
         background: black;
-        position: absolute;
-        top: 320px;
-        left: 15%;
-    }
-
-    .eye2 {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: black;
-        position: absolute;
-        top: 320px;
-        left: 75%;
     }
 
     .container {
@@ -70,11 +63,13 @@
     }
 </style>
 
-<div class="eye"></div>
-<div class="eye2"></div>
 <div class="container">
+    <div class="eye-g">
+        <div class="eye"></div>
+        <div class="eye"></div>
+    </div>
     <a href="login-input.php"><button class="mouse">ログイン</button></a>
-    <a href="register.php"><button class="signup">新規登録</button></a>
+    <a href="login-input.php"><button class="signup">新規登録</button></a>
 </div>
 
 
