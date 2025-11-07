@@ -16,8 +16,8 @@
             会員名とパスワードを入力してログインしてください。
             <form action="login-output.php" method="post">
                 <div class="form-group">
-                    <label for="username">会員名</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="user_name">会員名</label>
+                    <input type="text" id="user_name" name="user_name" required>
                 </div>
 
                 <div class="form-group">
