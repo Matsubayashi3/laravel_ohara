@@ -8,7 +8,7 @@
 
 <!-- 個別ブロック -->
 <?php
-$name = $_POST['username'];
+$name = $_POST['user_name'];
 $password = $_POST['password'];
 
 unset($_SESSION['users_data']);
