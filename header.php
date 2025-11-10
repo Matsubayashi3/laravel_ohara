@@ -21,19 +21,19 @@
 
     <!-- 共通デバッグゾーン -->
     <?php
-    // echo '[デバッグゾーン]';
-    // echo '■$_POST';
-    // echo '<pre>';
-    // echo var_dump($_POST);
-    // echo '</pre><br>';
+    echo '[デバッグゾーン]';
+    echo '■$_POST';
+    echo '<pre>';
+    echo var_dump($_POST);
+    echo '</pre><br>';
 
-    // // $_SESSION
-    // echo '■$_SESSION';
-    // echo '<pre>';
-    // echo var_dump($_SESSION);
-    // echo '</pre><br>';
+    // $_SESSION
+    echo '■$_SESSION';
+    echo '<pre>';
+    echo var_dump($_SESSION);
+    echo '</pre><br>';
 
-    // // SESSION_ID
-    // echo '■セッションID<br>';
-    // echo session_id();
+    // SESSION_ID
+    echo '■セッションID<br>';
+    echo session_id();
     ?>
