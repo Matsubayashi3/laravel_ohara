@@ -12,7 +12,7 @@
         <h1>登録が完了しました。</h1>
 
         <form action="login.php" method="post">
-            <button type="submit" class="login-button">ログイン画面へ</button>
+            <a href="login-input.php"><button type="submit" class="login-button">ログイン画面へ</button></a>
         </form>
     </div>
 </div>
