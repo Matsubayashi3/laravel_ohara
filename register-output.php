@@ -4,7 +4,6 @@
 <!-- ヘッダーの読み込み -->
 <?php include 'header.php' ?>
 
-
 <!-- DB接続ファイルの読み込み -->
 <?php include 'dbconect.php' ?>
 
