@@ -11,18 +11,9 @@
     <div class="login-form">
         <h1>登録が完了しました。</h1>
 
-        <form action="login-output.php" method="post">
-            <div class="form-group">
-                <label for="username">会員名</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">パスワード</label>
-                <input type="password" id="password" name="password" requireed>
-            </div>
-
-            <button type="submit" class="login-button"></button>
+        <form action="login.php" method="post">
+            <button type="submit" class="login-button">ログイン画面へ</button>
         </form>
     </div>
 </div>
+
