@@ -9,7 +9,7 @@
 <!-- 個別ブロック -->
 <?php
 $name = $_POST['user_name'];
-$password = intval($_POST['password']);
+$password = $_POST['password'];
 
 unset($_SESSION['users_data']);
 //SQL準備
@@ -25,7 +25,7 @@ $user = $sql->fetch(PDO::FETCH_ASSOC);
 echo var_dump($user);
 
 //認証ブロック
-if ($password === $user['password']) {
+if ($_POST['password'] === $user['password']) {
     // echo 'ログイン成功！';
     // $_SESSIONの['customer']キーにデータを格納 *二次元連想配列
     $_SESSION['users_data'] = [
