@@ -4,6 +4,20 @@
 <!-- ヘッダーの読み込み -->
 <?php include 'header.php' ?>
 
+<?
+// 変数を初期化
+$name = " ";
+$password = " ";
+
+
+// ログイン判定＆変数代入
+if (isset($_SESSION['users_data'])) { //ログインしている時
+    $name = $_SESSION['users_data']['user_name'];
+    $password = $_SESSION['users_data']['password'];
+}
+echo $name;
+echo $password;
+?>
 <!-- ページ -->
 <link rel="stylesheet" href="style\login.css">
 <div class="container">
@@ -11,10 +25,10 @@
     <div class="login-form">
         <h1>新規登録</h1>
 
-        <form action="login-output.php" method="post">
+        <form action="register-output.php" method="post">
             <div class="form-group">
-                <label for="username">会員名</label>
-                <input type="text" id="username" name="username" required>
+                <label for="user_name">会員名</label>
+                <input type="text" id="user_name" name="user_name" required>
             </div>
 
             <div class="form-group">
@@ -31,3 +45,5 @@
         </form>
     </div>
 </div>
+<!-- フッターの読み込み -->
+<?php include 'footer.php' ?>

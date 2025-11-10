@@ -69,7 +69,7 @@
         <div class="eye"></div>
     </div>
     <a href="login-input.php"><button class="mouse">ログイン</button></a>
-    <a href="login-input.php"><button class="signup">新規登録</button></a>
+    <a href="register-input.php"><button class="signup">新規登録</button></a>
 </div>
 
 
