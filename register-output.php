@@ -20,7 +20,7 @@ $password = $_POST['password'];
 // 入力されたログイン名の存在確認 ⇒DBを検索して結果が空であればまだ使われていないログイン名
 if (isset($_SESSION['users_data'])) { //ログインしていたら（更新だったら）
     // SQL準備
-    $sql = $pdo->prepare('SELECT * FROM users_data WHERE user_id!=:id AND user_name = :users_name'); //idが異なり、ログイン名が同じデータ⇒既に使われているデータ
+    $sql = $pdo->prepare('SELECT * FROM users_data WHERE user_id!=:user_id AND user_name = :user_name'); //idが異なり、ログイン名が同じデータ⇒既に使われているデータ
     // 値を紐づけ
     $sql->bindValue(':user_id', $_SESSION['users_data']['user_id'], PDO::PARAM_INT);
     $sql->bindValue(':user_name', $name, PDO::PARAM_STR);
@@ -39,7 +39,7 @@ if (empty($sql->fetchAll())) { //fetchのみだと１件取得、fetchAll全て�
     //ユーザー情報更新ブロック
     if (isset($_SESSION['users_data'])) { //ログイン判定
         // SQL準備
-        $sql = $pdo->prepare('UPDATE customer SET user_name=:name,password=:password WHERE user_id=:id');
+        $sql = $pdo->prepare('UPDATE users_data SET user_name=:name,password=:password WHERE user_id=:id');
         // 値を紐づけ
         $sql->bindValue(':name', $name, PDO::PARAM_STR);
         $sql->bindValue(':password', $password, PDO::PARAM_STR);
