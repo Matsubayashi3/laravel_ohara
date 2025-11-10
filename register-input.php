@@ -9,11 +9,6 @@
 $name = " ";
 $password = " ";
 
-//csrf　対策
-$token = random_bytes(32);
-$csrf_token = bin2hex($token);
-// echo $csrf_token;
-$_SESSION['csrf'] = $csrf_token;
 
 // ログイン判定＆変数代入
 if (isset($_SESSION['users_data'])) { //ログインしている時
@@ -33,12 +28,12 @@ echo $password;
         <form action="register-output.php" method="post">
             <div class="form-group">
                 <label for="user_name">会員名</label>
-                <input type="text" id="user_name" name="user_name" value="<?= $name ?>" required>
+                <input type="text" id="user_name" name="user_name" required>
             </div>
 
             <div class="form-group">
                 <label for="password">パスワード</label>
-                <input type="password" id="password" name="password" value="<?= $password ?>" required>
+                <input type="password" id="password" name="password" required>
                 <small>※半角英数字記号のみ</small>
             </div>
 
@@ -47,7 +42,6 @@ echo $password;
             <div class="register-link">
                 <a href="login-input.php">ログイン</a>
             </div>
-            <input type='hidden' name='csrf' value='<?= $_SESSION['csrf'] ?>'>
         </form>
     </div>
 </div>
