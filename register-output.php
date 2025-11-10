@@ -42,7 +42,7 @@ if (empty($sql->fetchAll())) { //fetchのみだと１件取得、fetchAll全て�
         $sql = $pdo->prepare('UPDATE users_data SET user_name=:name,password=:password WHERE user_id=:id');
         // 値を紐づけ
         $sql->bindValue(':name', $name, PDO::PARAM_STR);
-        $sql->bindValue(':password', $password, PDO::PARAM_STR);
+        $sql->bindValue(':password', $password, PDO::PARAM_INT);
         $sql->bindValue(':id', $_SESSION['users_data']['user_id'], PDO::PARAM_INT);
         // 実行
         $sql->execute();
@@ -62,7 +62,7 @@ if (empty($sql->fetchAll())) { //fetchのみだと１件取得、fetchAll全て�
         // 3.実行の準備 プリペアードステートメント(stmt)
         $stmt = $pdo->prepare($sql);
         // 3.5 プレースホルダーに値を紐づけ
-        $stmt->bindValue(':password', $password, PDO::PARAM_STR);
+        $stmt->bindValue(':password', $password, PDO::PARAM_INT);
         $stmt->bindValue(':user_name', $name, PDO::PARAM_STR);
         // 4.実行
         $stmt->execute();
