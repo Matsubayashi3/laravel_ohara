@@ -3,18 +3,18 @@
 <?php session_start(); ?>
 <!-- ヘッダーの読み込み -->
 <?php include 'header.php' ?>
-
 <!-- DB接続ファイルの読み込み -->
 <?php include 'dbconect.php' ?>
 
 <!-- 個別ブロック -->
 <?php
+// csrfチェック
+
 // パスワードの暗号化（ハッシュ化）
 $hashpass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 //変数の準備
 $name = $_POST['user_name'];
 $password = $_POST['password'];
-$message = '';
 
 // ログイン名の重複チェックブロック
 // 入力されたログイン名の存在確認 ⇒DBを検索して結果が空であればまだ使われていないログイン名
@@ -46,15 +46,15 @@ if (empty($sql->fetchAll())) { //fetchのみだと１件取得、fetchAll全て�
         $sql->bindValue(':id', $_SESSION['users_data']['user_id'], PDO::PARAM_INT);
         // 実行
         $sql->execute();
-        
+
         // セッション情報の更新
         $_SESSION['users_data'] = [
             'name' => $name,
             'password' => $password,
             'id' => $_SESSION['users_data']['user_id'],
         ];
-        
-        echo 'お客様情報を更新しました';
+
+        $message = 'お客様情報を更新しました';
     } else {
         // ユーザー登録処理
         // 2.SQLの準備
@@ -66,11 +66,12 @@ if (empty($sql->fetchAll())) { //fetchのみだと１件取得、fetchAll全て�
         $stmt->bindValue(':user_name', $name, PDO::PARAM_STR);
         // 4.実行
         $stmt->execute();
-        $message =  'お客様情報を登録しました。';
+        $message = 'お客様情報を登録しました。';
     }
 } else { //$sqlが空でない＝ログイン名が既に使われている時
     $message = 'ログイン名が既に使われています。別のログイン名を使用してください';
 }
+
 ?>
 
 <!-- ページ -->
@@ -78,11 +79,11 @@ if (empty($sql->fetchAll())) { //fetchのみだと１件取得、fetchAll全て�
 <div class="container">
     <img class="icon" src="image/くちぱっち背景透明.png" alt="アイコン画像">
     <div class="login-form">
-        <h1><?php echo htmlspecialchars($message); ?></h1>
+        <h1><?php echo $message; ?></h1>
         <?php if ($message === 'お客様情報を登録しました。') : ?>
-        <form action="login-input.php" method="post">
-            <button type="submit" class="login-button">ログイン画面へ</button>
-        </form>
+            <form action="login-input.php" method="post">
+                <button type="submit" class="login-button">ログイン画面へ</button>
+            </form>
         <?php endif; ?>
     </div>
 </div>
