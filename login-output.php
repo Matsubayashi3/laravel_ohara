@@ -9,7 +9,7 @@
 <!-- 個別ブロック -->
 <?php
 $name = $_POST['user_name'];
-$password = intval($_POST['password']);
+$password = $_POST['password'];
 
 unset($_SESSION['users_data']);
 //SQL準備
