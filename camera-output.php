@@ -9,13 +9,6 @@
 <!-- 個別ブロック -->
 
 <?php
-$taro = $pdo->prepare('SELECT MAX(id) FROM product');
-$taro->execute();
-$max = $taro->fetch(PDO::FETCH_NUM);
-$max = $max[0] ?? 0;
-$id = $max + 1;
-$name = $_POST["name"];
-$price = intval($_POST["price"]);
 
 echo var_dump($id);
 // SQL準備
