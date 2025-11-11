@@ -35,243 +35,232 @@
 ?>
 
 <style>
-    /* ボタン */
-    body {
-        margin: 0;
-        width: 100%;
-    }
-
-    .container {
-        width: 300px;
-        margin: 200px auto 0;
-    }
-
-    .field {
+    .tab-3 {
         display: flex;
+        flex-wrap: wrap;
     }
 
-    .inputtext {
-        color: rgba(43, 32, 32, 0.76);
-        font-size: 18px;
-        border-left: 0;
-        border-right: 0;
-        width: 80px;
-        line-height: 3rem;
-        text-align: center;
-        border: 1px solid #D7DBDD;
-        padding: 0 10px;
-    }
-
-    .button {
-        color: rgba(43, 32, 32, 0.76);
-        font-size: 18px;
-        cursor: pointer;
-        padding: 5px 25px;
-        background-color: white;
-        border: 1px solid #D7DBDD;
-        border-radius: 0;
-        outline: 0;
-    }
-
-    /* ここからタブ */
-    .area {
-        width: 100%;
-        /* height: 60px; */
-        max-width: 1200px;
-        flex-wrap: nowrap;
-        display: flex;
-        overflow-x: auto;
-    }
-
-    .tab_class {
-        width: calc(100%/5);
-        height: 50px;
-        background-color: darkgrey;
-        line-height: 50px;
-        font-size: 15px;
-        text-align: center;
-        display: block;
-        float: left;
+    .tab-3>label {
+        flex: 1 1;
         order: -1;
-        min-width: 120px;
-        flex: 0 0 auto;
-        margin: 0 2px;
-        white-space: nowrap;
+        min-width: 70px;
+        padding: .7em 1em .5em;
+        background-color: #f2f2f2;
+        color: #999;
+        font-weight: 600;
+        font-size: .9em;
+        text-align: center;
+        cursor: pointer;
     }
 
-    input[name="tab_name"] {
+    .tab-3>label:hover {
+        opacity: .8;
+    }
+
+    .tab-c {
         display: none;
     }
 
-    input:checked+.tab_class {
-        background-color: cadetblue;
-        color: aliceblue;
-    }
-
-    .content_class {
+    .tab-3>div {
         display: none;
         width: 100%;
+        padding: 1.5em 1em;
+        background-color: #fff;
     }
 
-    input:checked+.tab_class+.content_class {
+    .tab-3 label:has(:checked) {
+        border-bottom: 4px solid #2589d0;
+        color: #2589d0;
+    }
+
+    .tab-3 label:has(:checked)+div {
         display: block;
+    }
+
+    img {
+        width: 8rem;
+        height: auto;
+    }
+
+    .yasai-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+    }
+
+    /* ボタン */
+    /* .qty {
+        background: #f1ede9;
+        padding: 20px 10px;
+        border-radius: 10px;
+        display: flex;
+        width: fit-content;
+        margin: 60px auto;
+    } */
+
+    #down,
+    #up {
+        font-size: 25px;
+        padding: 0 14px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    #textBox {
+        border: none;
+        background: none;
+        font-size: 18px;
+        text-align: center;
+        width: 70px;
+    }
+
+    /* [input type="number"]のデフォルトの矢印を消す */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        -moz-appearance: textfield;
+    }
+
+    /* タブレット表示 (768px以下) */
+    @media (max-width: 768px) {
+        .item {
+            width: 45%;
+            /* 2列表示 */
+        }
+    }
+
+    /* スマホ表示 (480px以下) */
+    @media (max-width: 480px) {
+        .item {
+            width: 30%;
+        }
+
+        .yasai-container {
+            gap: 10px;
+        }
+
+        .item img {
+            width: 5rem;
+            /* 画像を小さくする */
+        }
+
+        /* ボタンと入力欄の縮小 */
+        .down,
+        .up {
+            font-size: 18px;
+            /* ボタンの文字サイズを小さく */
+            padding: 0 8px;
+            /* パディングを小さく */
+        }
+
+        .textBox {
+            font-size: 14px;
+            /* 入力欄の文字サイズを小さく */
+            width: 40px;
+            /* 入力欄の幅を狭く */
+        }
+
+        .btn-group {
+            transform: scale(0.8);
+            /* 全体を少し縮小 */
+            margin-top: 5px;
+        }
+
+        .yasai-container {
+            gap: 15px;
+        }
     }
 </style>
 
+
+<div class="tab-3">
+    <label>
+        <input class="tab-c" type="radio" name="tab-3" checked>
+        野菜
+    </label>
+
+    <div>
+        <div class="yasai-container">
+            <?php
+            $test_list = [
+                'レタス',
+                'トマト',
+                'じゃがいも',
+                'にんじん',
+                'たまねぎ',
+            ];
+
+            $test_list2 = [
+                'yasai.png',
+                'tomato.png',
+                'jagaimo.png',
+                'ninjin.png'
+            ];
+            ?>
+
+
+            <?php
+            for ($num = 0; $num < 4; $num++) {
+            ?>
+                <div class="item">
+                    <img src="image/<?= $test_list2[$num] ?>" alt="<?= $test_list[$num] ?>">
+                    <?php echo $test_list[$num] ?>
+                    <div class="btn-group" role="group" aria-label="数量操作">
+                        <button type="button" class="btn btn-warning down">-</button>
+                        <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="1">
+                        <button type="button" class="btn btn-success up">+</button>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+    <label>
+        <input class="tab-c" type="radio" name="tab-3">
+        肉
+    </label>
+    <div>ぜひお好みの色にアレンジしてみてください。</div>
+
+    <label>
+        <input class="tab-c" type="radio" name="tab-3">
+        魚
+    </label>
+    <div>もちろんレスポンシブ対応で、タブの追加にも対応しています。</div>
+</div>
+
 <script>
-    // DOM が完全に読み込まれてから要素を取得してイベント登録する
-    document.addEventListener('DOMContentLoaded', () => {
-        // HTML の id 値を使って以下の DOM 要素を取得
-        const downbutton = document.getElementById('down');
-        const upbutton = document.getElementById('up');
-        const text = document.getElementById('textbox');
-        const reset = document.getElementById('reset');
+    document.querySelectorAll('.item').forEach(item => {
+        const down = item.querySelector('.down');
+        const up = item.querySelector('.up');
+        const box = item.querySelector('.textBox');
 
-        // 要素が存在するか確認してからイベントを登録（null チェック）
-        if (downbutton) {
-            downbutton.addEventListener('click', (event) => {
-                if (text && Number(text.value) >= 1) {
-                    text.value = String(Number(text.value) - 1);
-                }
-            });
-        }
+        // 初期値設定
+        let num = parseInt(box.value) || 1;
+        box.value = num;
 
-        if (upbutton) {
-            upbutton.addEventListener('click', (event) => {
-                if (text) {
-                    text.value = String(Number(text.value) + 1);
-                }
-            });
-        }
+        down.addEventListener('click', () => {
+            if (num > 1) {
+                num--;
+                box.value = num;
+            }
+        });
 
-        if (reset) {
-            reset.addEventListener('click', (event) => {
-                if (text) text.value = '0';
-            });
-        }
+        up.addEventListener('click', () => {
+            num++;
+            box.value = num;
+        });
     });
 </script>
 
-<!-- 野菜 -->
-<div class="area">
-    <input type="radio" name="tab_name" id="tab1" checked>
-    <label class="tab_class" for="tab1">野菜</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_1">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_1">
-                <button type="button" class="button" id="up_1">＋</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 肉 -->
-    <input type="radio" name="tab_name" id="tab2">
-    <label class="tab_class" for="tab2">肉</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_2">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_2">
-                <button type="button" class="button" id="up_2">＋</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 魚介 -->
-    <input type="radio" name="tab_name" id="tab3">
-    <label class="tab_class" for="tab3">魚介</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_3">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_3">
-                <button type="button" class="button" id="up_3">＋</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 主食・粉 -->
-    <input type="radio" name="tab_name" id="tab4">
-    <label class="tab_class" for="tab4">主食・粉</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_4">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_4">
-                <button type="button" class="button" id="up_4">＋</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 調味料 -->
-    <input type="radio" name="tab_name" id="tab5">
-    <label class="tab_class" for="tab5">調味料</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_5">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_5">
-                <button type="button" class="button" id="up_5">＋</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- スパイス -->
-    <input type="radio" name="tab_name" id="tab6">
-    <label class="tab_class" for="tab6">スパイス</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_6">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_6">
-                <button type="button" class="button" id="up_6">＋</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 卵・乳・豆 -->
-    <input type="radio" name="tab_name" id="tab7">
-    <label class="tab_class" for="tab7">卵・乳・豆</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_7">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_7">
-                <button type="button" class="button" id="up_7">＋</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- デザート -->
-    <input type="radio" name="tab_name" id="tab8">
-    <label class="tab_class" for="tab8">デザート</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_8">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_8">
-                <button type="button" class="button" id="up_8">＋</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- その他 -->
-    <input type="radio" name="tab_name" id="tab9">
-    <label class="tab_class" for="tab9">その他</label>
-    <div class="content_class">
-        <div class="container">
-            <div class="field">
-                <button type="button" class="button" id="down_9">－</button>
-                <input type="text" value="0" class="inputtext" id="textbox_9">
-                <button type="button" class="button" id="up_9">＋</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="main.js"></script>
 
 <!-- フッターの読み込み -->
 <?php include 'footer.php' ?>
