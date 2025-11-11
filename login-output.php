@@ -25,7 +25,7 @@ $user = $sql->fetch(PDO::FETCH_ASSOC);
 echo var_dump($user);
 
 //認証ブロック
-if ($_POST['password'] === $user['password']) {
+if ($user !== false && $_POST['password'] == $user['password']) {
     // echo 'ログイン成功！';
     // $_SESSIONの['customer']キーにデータを格納 *二次元連想配列
     $_SESSION['users_data'] = [
@@ -34,13 +34,30 @@ if ($_POST['password'] === $user['password']) {
     ];
     // ""で文字列を表示するときに{変数}で変数を直接埋め込める echoの必要なし
     //  デバッグ
-    echo 'ログイン成功';
+    $message = 'ログイン成功';
     // echo var_dump($_session);
 } else {
-    echo 'ログイン失敗。。。';
+    $message = 'ユーザー名かパスワードが間違っています。';
 }
 
 ?>
+
+<!-- ページ -->
+<link rel="stylesheet" href="style\login.css">
+<div class="container">
+    <img class="icon" src="image/くちぱっち背景透明.png" alt="アイコン画像">
+    <div class="login-form">
+        <?php if ($message === 'ログイン成功') : ?>
+            <?php header('Location: select.php');
+            exit(); ?>
+        <?php else: ?>
+            <h1><?php echo $message; ?></h1>
+            <form action="login-input.php" method="post">
+                <button type="submit" class="login-button">ログイン画面へ</button>
+            </form>
+        <?php endif; ?>
+    </div>
+</div>
 
 <!-- フッターの読み込み -->
 <?php include 'footer.php' ?>
