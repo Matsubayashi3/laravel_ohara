@@ -38,7 +38,6 @@
     .tab-3 {
         display: flex;
         flex-wrap: wrap;
-        max-width: 500px;
     }
 
     .tab-3>label {
@@ -83,6 +82,20 @@
         height: auto;
     }
 
+    .yasai-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+    }
+
     /* ボタン */
     /* .qty {
         background: #f1ede9;
@@ -116,6 +129,56 @@
         margin: 0;
         -moz-appearance: textfield;
     }
+
+    /* タブレット表示 (768px以下) */
+    @media (max-width: 768px) {
+        .item {
+            width: 45%;
+            /* 2列表示 */
+        }
+    }
+
+    /* スマホ表示 (480px以下) */
+    @media (max-width: 480px) {
+        .item {
+            width: 30%;
+        }
+
+        .yasai-container {
+            gap: 10px;
+        }
+
+        .item img {
+            width: 5rem;
+            /* 画像を小さくする */
+        }
+
+        /* ボタンと入力欄の縮小 */
+        .down,
+        .up {
+            font-size: 18px;
+            /* ボタンの文字サイズを小さく */
+            padding: 0 8px;
+            /* パディングを小さく */
+        }
+
+        .textBox {
+            font-size: 14px;
+            /* 入力欄の文字サイズを小さく */
+            width: 40px;
+            /* 入力欄の幅を狭く */
+        }
+
+        .btn-group {
+            transform: scale(0.8);
+            /* 全体を少し縮小 */
+            margin-top: 5px;
+        }
+
+        .yasai-container {
+            gap: 15px;
+        }
+    }
 </style>
 
 
@@ -124,28 +187,42 @@
         <input class="tab-c" type="radio" name="tab-3" checked>
         野菜
     </label>
-    <?php
-    $test_list = [
-        'レタス',
-        'じゃがいも',
-        'トマト',
-        'にんじん',
-        'たまねぎ',
-    ];
 
-    for ($num = 0; $num < 5; $num++) {
-    ?>
-        <div>
-            <img src="image/yasai.png" alt="<?php echo $test_list[$num] ?>">
-            <div class="qty">
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button type="button" class="btn btn-warning" id='down'>-</button>
-                    <input name="<?php $test_list[$num] ?>" type="number" id="textBox" class="btn btn-warning">
-                    <button type="button" class="btn btn-success" id='up'>+</button>
+    <div>
+        <div class="yasai-container">
+            <?php
+            $test_list = [
+                'レタス',
+                'トマト',
+                'じゃがいも',
+                'にんじん',
+                'たまねぎ',
+            ];
+
+            $test_list2 = [
+                'yasai.png',
+                'tomato.png',
+                'jagaimo.png',
+                'ninjin.png'
+            ];
+            ?>
+
+
+            <?php
+            for ($num = 0; $num < 4; $num++) {
+            ?>
+                <div class="item">
+                    <img src="image/<?= $test_list2[$num] ?>" alt="<?= $test_list[$num] ?>">
+                    <?php echo $test_list[$num] ?>
+                    <div class="btn-group" role="group" aria-label="数量操作">
+                        <button type="button" class="btn btn-warning down">-</button>
+                        <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="1">
+                        <button type="button" class="btn btn-success up">+</button>
+                    </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
-    <?php } ?>
+    </div>
 
     <label>
         <input class="tab-c" type="radio" name="tab-3">
@@ -161,23 +238,29 @@
 </div>
 
 <script>
-    const qtyDown = document.getElementById('down');
-    const qtyUp = document.getElementById('up');
-    const qtyText = document.getElementById('textBox');
-    let num = 1;
-    qtyText.value = num;
+    document.querySelectorAll('.item').forEach(item => {
+        const down = item.querySelector('.down');
+        const up = item.querySelector('.up');
+        const box = item.querySelector('.textBox');
 
-    qtyDown.addEventListener('click', () => {
-        if (parseInt(qtyText.value) >= 2) { // 1以下にならないように設定
-            num--;
-            qtyText.value = num;
-        }
-    });
-    qtyUp.addEventListener('click', () => {
-        num++;
-        qtyText.value = num;
+        // 初期値設定
+        let num = parseInt(box.value) || 1;
+        box.value = num;
+
+        down.addEventListener('click', () => {
+            if (num > 1) {
+                num--;
+                box.value = num;
+            }
+        });
+
+        up.addEventListener('click', () => {
+            num++;
+            box.value = num;
+        });
     });
 </script>
+
 
 <!-- フッターの読み込み -->
 <?php include 'footer.php' ?>
