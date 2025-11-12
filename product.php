@@ -181,61 +181,62 @@
     }
 </style>
 
+<body>
+    <div class="tab-3">
+        <label>
+            <input class="tab-c" type="radio" name="tab-3" checked>
+            野菜
+        </label>
 
-<div class="tab-3">
-    <label>
-        <input class="tab-c" type="radio" name="tab-3" checked>
-        野菜
-    </label>
+        <div>
+            <div class="yasai-container">
+                <?php
+                $test_list = [
+                    'レタス',
+                    'トマト',
+                    'じゃがいも',
+                    'にんじん',
+                    'たまねぎ',
+                ];
 
-    <div>
-        <div class="yasai-container">
-            <?php
-            $test_list = [
-                'レタス',
-                'トマト',
-                'じゃがいも',
-                'にんじん',
-                'たまねぎ',
-            ];
-
-            $test_list2 = [
-                'yasai.png',
-                'tomato.png',
-                'jagaimo.png',
-                'ninjin.png'
-            ];
-            ?>
+                $test_list2 = [
+                    'yasai.png',
+                    'tomato.png',
+                    'jagaimo.png',
+                    'ninjin.png'
+                ];
+                ?>
 
 
-            <?php
-            for ($num = 0; $num < 4; $num++) {
-            ?>
-                <div class="item">
-                    <img src="image/<?= $test_list2[$num] ?>" alt="<?= $test_list[$num] ?>">
-                    <?php echo $test_list[$num] ?>
-                    <div class="btn-group" role="group" aria-label="数量操作">
-                        <button type="button" class="btn btn-warning down">-</button>
-                        <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="1">
-                        <button type="button" class="btn btn-success up">+</button>
+                <?php
+                for ($num = 0; $num < 4; $num++) {
+                ?>
+                    <div class="item">
+                        <img src="image/<?= $test_list2[$num] ?>" alt="<?= $test_list[$num] ?>">
+                        <?php echo $test_list[$num] ?>
+                        <div class="btn-group" role="group" aria-label="数量操作">
+                            <button type="button" class="btn btn-warning down">-</button>
+                            <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="1">
+                            <button type="button" class="btn btn-success up">+</button>
+                        </div>
                     </div>
-                </div>
-            <?php } ?>
+                <?php } ?>
+            </div>
         </div>
+
+        <label>
+            <input class="tab-c" type="radio" name="tab-3">
+            肉
+        </label>
+        <div>ぜひお好みの色にアレンジしてみてください。</div>
+
+        <label>
+            <input class="tab-c" type="radio" name="tab-3">
+            魚
+        </label>
+        <div>もちろんレスポンシブ対応で、タブの追加にも対応しています。</div>
     </div>
-
-    <label>
-        <input class="tab-c" type="radio" name="tab-3">
-        肉
-    </label>
-    <div>ぜひお好みの色にアレンジしてみてください。</div>
-
-    <label>
-        <input class="tab-c" type="radio" name="tab-3">
-        魚
-    </label>
-    <div>もちろんレスポンシブ対応で、タブの追加にも対応しています。</div>
-</div>
+</body>
 
 <script>
     document.querySelectorAll('.item').forEach(item => {
