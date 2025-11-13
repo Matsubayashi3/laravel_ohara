@@ -28,7 +28,7 @@ echo $password;
         <form action="register-output.php" method="post">
             <div class="form-group">
                 <label for="user_name">会員名</label>
-                <input type="text" id="user_name" name="user_name" value="<?= $name ?>" required>
+                <input type="text" id="user_name" name="user_name" required>
             </div>
 
             <div class="form-group">

@@ -9,16 +9,14 @@
 <!-- 個別ブロック -->
 
 <?php
+$id = $_SESSION['users_data']['user_id'];
+var_dump($_FILES);
+$img_name = $_FILES['file']['name'];
 
+// ファイル名をリネーム（タイムスタンプ + ユーザーID + 拡張子）
+$new_img_name = 'add_' . $id . '.jpg';  // 例: add_1.jpg
 
-if (is_uploaded_file($_FILES["file"]["tmp_name"]) == true) {
-    $filepass = "image/" . basename($id . ".jpg"); //MAXでうけっとった番号+1の名前に変更
-    if (move_uploaded_file($_FILES["file"]["tmp_name"], $filepass) == true) {
-        echo "ファイルのアップロードに成功しました。";
-        echo "<img src=" . $filepass . ">";
-    } else {
-        echo "ファイルのアップロードに失敗しました。再送してください";
-    }
-}
+//画像を保存（リネーム後のファイル名で保存）
+move_uploaded_file($_FILES['file']['tmp_name'], 'image/冷蔵庫/' . $new_img_name);
 
 ?>

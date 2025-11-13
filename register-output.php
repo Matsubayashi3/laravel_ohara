@@ -62,7 +62,7 @@ if (empty($sql->fetchAll())) { //fetchのみだと１件取得、fetchAll全て�
         // 3.実行の準備 プリペアードステートメント(stmt)
         $stmt = $pdo->prepare($sql);
         // 3.5 プレースホルダーに値を紐づけ
-        $stmt->bindValue(':password', $password, PDO::PARAM_INT);
+        $stmt->bindValue(':password', $password, PDO::PARAM_STR);
         $stmt->bindValue(':user_name', $name, PDO::PARAM_STR);
         // 4.実行
         $stmt->execute();
