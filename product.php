@@ -130,8 +130,23 @@
         -moz-appearance: textfield;
     }
 
+    .suggestion {
+        margin-top: 100px;
+        color: white;
+        padding: 8px 16px;
+        background-color: #E97132;
+    }
+
+    .huton {
+        text-align: center;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
     /* タブレット表示 (768px以下) */
-    @media (max-width: 768px) {
+    @media (max-width: 1260px) {
         .item {
             width: 45%;
             /* 2列表示 */
@@ -139,7 +154,7 @@
     }
 
     /* スマホ表示 (480px以下) */
-    @media (max-width: 480px) {
+    @media (max-width: 580px) {
         .item {
             width: 30%;
         }
@@ -197,6 +212,15 @@
                     'じゃがいも',
                     'にんじん',
                     'たまねぎ',
+                    'たまねぎ',
+                    'たまねぎ',
+                    'たまねぎ',
+                    'たまねぎ',
+                    'たまねぎ',
+                    'たまねぎ',
+                    'たまねぎ',
+                    'たまねぎ',
+                    'たまねぎ',
                 ];
 
                 $test_list2 = [
@@ -209,14 +233,14 @@
 
 
                 <?php
-                for ($num = 0; $num < 4; $num++) {
+                for ($num = 0; $num < 10; $num++) {
                 ?>
                     <div class="item">
                         <img src="image/<?= $test_list2[$num] ?>" alt="<?= $test_list[$num] ?>">
                         <?php echo $test_list[$num] ?>
                         <div class="btn-group" role="group" aria-label="数量操作">
                             <button type="button" class="btn btn-warning down">-</button>
-                            <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="1">
+                            <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="0">
                             <button type="button" class="btn btn-success up">+</button>
                         </div>
                     </div>
@@ -236,6 +260,11 @@
         </label>
         <div>もちろんレスポンシブ対応で、タブの追加にも対応しています。</div>
     </div>
+
+    <div class="huton">
+        <a href="suggestion.php"><button class="suggestion ">レシピ検索</button></a>
+    </div>
+
 </body>
 
 <script>
@@ -245,11 +274,11 @@
         const box = item.querySelector('.textBox');
 
         // 初期値設定
-        let num = parseInt(box.value) || 1;
+        let num = parseInt(box.value) || 0;
         box.value = num;
 
         down.addEventListener('click', () => {
-            if (num > 1) {
+            if (num > 0) {
                 num--;
                 box.value = num;
             }
