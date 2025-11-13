@@ -18,6 +18,7 @@
         padding: 20px;
     }
 
+    /* ここからカメラ */
     #camera-feed {
         width: 100%;
         max-width: 500px;
@@ -26,7 +27,6 @@
         margin-bottom: 20px;
     }
 
-    /* シャッターボタンを丸くして中央配置 */
     #capture-button {
         width: 100px;
         height: 100px;
@@ -74,16 +74,21 @@
         min-width: 150px;
         /* 最小幅を設定して極端に小さくなるのを防ぐ */
     }
+
+    /* ここまでカメラ */
 </style>
 
 <body>
+    <!-- 全部カメラ -->
     <video id="camera-feed" autoplay playsinline></video>
 
     <button id="capture-button"></button>
 
-    <form id="file-select-form" action="add-input.php" method='post' enctype="multipart/form-data">
+    <!-- ファイル選択から画像 -->
+    <form id="file-select-form" action="camera-output.php" method='post' enctype="multipart/form-data">
         <img id="preview" style="display:none; max-width:300px;">
         <input type="file" accept="image/*" onchange="showPreview(this)" name="file">
+        <input type='submit' value='アップロード'>
     </form>
 
     <canvas id="camera-canvas" style="display:none;"></canvas>
@@ -109,6 +114,7 @@
         }
     }
 
+    // ここから全部カメラ
     const videoElement = document.getElementById('camera-feed');
     const captureButton = document.getElementById('capture-button');
     const canvasElement = document.getElementById('camera-canvas');
