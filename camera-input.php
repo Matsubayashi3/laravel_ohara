@@ -5,7 +5,7 @@
 <?php include 'header.php' ?>
 
 <!-- 個別ブロック-->
-<form action="add-input.php" method='post' enctype="multipart/form-data">
+<form action="camera-output.php" method='post' enctype="multipart/form-data">
     <input type="file" accept="image/*" onchange="showPreview(this)" name="file">
     <img id="preview" style="display:none; max-width:300px;">
     </p>
