@@ -29,12 +29,12 @@ print("<br>");
 var_dump($output);
 // 2. JSONデコード（PHP配列に変換）
 $data = json_decode($output[0], true);
-//SQL準備
-$sql = $pdo->prepare('SELECT food_id FROM food_data where food_name :food_name ');
-//値を紐づけ
-$sql->bindValue(':food_name', $output, PDO::PARAM_STR);
-//実行
-$sql->execute();
+// //SQL準備
+// $sql = $pdo->prepare('SELECT food_id FROM food_data where food_name :food_name ');
+// //値を紐づけ
+// $sql->bindValue(':food_name', $output, PDO::PARAM_STR);
+// //実行
+// $sql->execute();
 
 // 3. エラーチェックと foreach 処理
 if (is_array($data)) {
