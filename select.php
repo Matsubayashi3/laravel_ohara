@@ -69,7 +69,7 @@
         <div class="eye"></div>
     </div>
     <a href="camera-input.php"><button class="mouse">在庫追加</button></a>
-    <a href="register-input.php"><button class="signup">在庫確認</button></a>
+    <a href="product.php"><button class="signup">在庫確認</button></a>
 </div>
 
 

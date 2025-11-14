@@ -6,7 +6,6 @@
 
 <!-- 個別ブロック-->
 <form action="camera-output.php" method='post' enctype="multipart/form-data">
-    <input type="file" accept="image/*" onchange="showPreview(this)" name="file">
     <img id="preview" style="display:none; max-width:300px;">
     </p>
 </form>
