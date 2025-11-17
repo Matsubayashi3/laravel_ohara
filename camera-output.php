@@ -36,13 +36,14 @@ $data = json_decode($output[0], true);
 // //実行
 // $sql->execute();
 
-// 3. エラーチェックと foreach 処理
+// 3. エラーチェックと処理
 if (is_array($data)) {
-    foreach ($data as $item) {
-        $name = $item[0];
-        $count = $item[1];
-        echo "食材:$name,個数:$count<br>";
-    }
+    // セッションに検出された食材データを保存
+    $_SESSION['detected_foods'] = $data;
+
+    // foodcheck.phpへリダイレクト
+    header('Location: foodcheck.php');
+    exit;
 } else {
     echo "❌ JSONデコード失敗: " . json_last_error_msg();
 }

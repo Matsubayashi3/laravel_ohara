@@ -6,7 +6,68 @@
 <!-- メニューの読み込み -->
 
 <!-- DB接続ファイルの読み込み -->
+<?php
+// foodcheck.phpと同様のDB接続情報を使用
+$dsn = 'mysql:host=127.0.0.1;dbname=cookingai;charset=utf8mb4';
+$user = 'root';
+$password = '';
 
+try {
+    $pdo = new PDO($dsn, $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo '<p style="color: red;">データベース接続エラー: ' . $e->getMessage() . '</p>';
+    exit;
+}
+
+// ユーザーIDの仮設定 (foodcheck.phpと合わせる)
+$user_id = 1;
+
+// 画像ファイル名を取得する関数 (food_idを使用するように変更)
+function get_food_image_path($food_id)
+{
+    // image/食材/food_id.jpg の形式でパスを生成
+    return "image/食材/{$food_id}.jpg";
+}
+
+// --- stock_dataから食材データを取得 ---
+$stock_data = [];
+try {
+    // stock_data, food_data, users_dataを結合して、食材名と数量を取得
+    $sql = "
+        SELECT
+            t1.count,
+            t2.food_id,
+            t2.food_name,
+            t2.food_category
+        FROM
+            stock_data t1
+        JOIN
+            food_data t2 ON t1.food_id = t2.food_id
+        WHERE
+            t1.user_id = :user_id
+        ORDER BY
+            t2.food_category, t2.food_name
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $stock_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo '<p style="color: red;">食材データ取得エラー: ' . $e->getMessage() . '</p>';
+}
+
+// カテゴリごとにデータをグループ化
+$grouped_stock = [];
+foreach ($stock_data as $item) {
+    $category = $item['food_category'] ?? '未分類';
+    $grouped_stock[$category][] = $item;
+}
+
+// タブのカテゴリ順序を定義 (food_stock.phpのHTML構造に合わせる)
+$tab_categories = ['野菜', '肉', '魚', '未分類']; // 未分類はDBにfood_categoryがない場合を想定
+
+?>
 
 
 <!-- 個別ブロック -->
@@ -18,23 +79,8 @@
 </form>
 <hr> -->
 
-<?php
-//検索処理
-// if (isset($_POST['search'])) { //検索ワードが入力されていたら
-//     //SQL準備
-//     $sql = $pdo->prepare('SELECT * FROM product WHERE name LIKE :search');
-//     //値を紐づけ
-//     $sql->bindValue(':search', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
-//     //実行
-//     $sql->execute();
-// } else { //検索ワードが入力されていなかったら（全件表示・デフォルト表示）
-//     //DBから商品データの取り出し
-//     $sql = $pdo->query('SELECT * FROM product');
-// }
-// //表示ブロック
-?>
-
 <style>
+    /* pasted_content_4.txtのスタイルを適用 */
     .tab-3 {
         display: flex;
         flex-wrap: wrap;
@@ -94,18 +140,11 @@
         flex-direction: column;
         align-items: center;
         width: 20%;
+        /* 画面サイズに合わせて調整 */
+        min-width: 120px;
     }
 
     /* ボタン */
-    /* .qty {
-        background: #f1ede9;
-        padding: 20px 10px;
-        border-radius: 10px;
-        display: flex;
-        width: fit-content;
-        margin: 60px auto;
-    } */
-
     #down,
     #up {
         font-size: 25px;
@@ -143,14 +182,6 @@
 
     a {
         text-decoration: none;
-    }
-
-    /* タブレット表示 (768px以下) */
-    @media (max-width: 1260px) {
-        .item {
-            width: 45%;
-            /* 2列表示 */
-        }
     }
 
     /* スマホ表示 (480px以下) */
@@ -198,67 +229,45 @@
 
 <body>
     <div class="tab-3">
-        <label>
-            <input class="tab-c" type="radio" name="tab-3" checked>
-            野菜
-        </label>
+        <?php
+        // タブのカテゴリをループ
+        foreach ($tab_categories as $index => $category):
+            $is_checked = ($index === 0) ? 'checked' : '';
+            $category_data = $grouped_stock[$category] ?? [];
+        ?>
+            <label>
+                <input class="tab-c" type="radio" name="tab-3" <?= $is_checked ?>>
+                <?= htmlspecialchars($category) ?>
+            </label>
 
-        <div>
-            <div class="yasai-container">
-                <?php
-                $test_list = [
-                    'レタス',
-                    'トマト',
-                    'じゃがいも',
-                    'にんじん',
-                    'たまねぎ',
-                    'たまねぎ',
-                    'たまねぎ',
-                    'たまねぎ',
-                    'たまねぎ',
-                    'たまねぎ',
-                    'たまねぎ',
-                    'たまねぎ',
-                    'たまねぎ',
-                    'たまねぎ',
-                ];
-
-                $test_list2 = [
-                    'yasai.png',
-                    'tomato.png',
-                    'jagaimo.png',
-                    'ninjin.png'
-                ];
-                ?>
-
-
-                <?php
-                for ($num = 0; $num < 10; $num++) {
-                ?>
-                    <div class="item">
-                        <img src="image/<?= $test_list2[$num] ?>" alt="<?= $test_list[$num] ?>">
-                        <?php echo $test_list[$num] ?>
-                        <div class="btn-group" role="group" aria-label="数量操作">
-                            <button type="button" class="btn btn-warning down">-</button>
-                            <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="0">
-                            <button type="button" class="btn btn-success up">+</button>
-                        </div>
+            <div>
+                <!-- 食材がない場合 -->
+                <?php if (empty($category_data)): ?>
+                    <p style="text-align: center; color: #999;">このカテゴリの食材は登録されていません。</p>
+                <?php else: ?>
+                    <div class="yasai-container">
+                        <?php foreach ($category_data as $item): ?>
+                            <?php
+                            $food_id = $item['food_id']; // food_idを取得
+                            $food_name = $item['food_name'];
+                            $count = $item['count'];
+                            $image_path = get_food_image_path($food_id); // food_idから画像パスを取得
+                            ?>
+                            <div class="item">
+                                <img src="<?= htmlspecialchars($image_path) ?>" alt="<?= htmlspecialchars($food_name) ?>">
+                                <?= htmlspecialchars($food_name) ?>
+                                <div class="btn-group" role="group" aria-label="数量操作">
+                                    <!-- IDではなくクラスを使用し、JavaScriptで処理 -->
+                                    <button type="button" class="btn btn-warning down">-</button>
+                                    <input name="<?= htmlspecialchars($food_name) ?>" type="number" class="textBox btn" value="<?= htmlspecialchars($count) ?>">
+                                    <button type="button" class="btn btn-success up">+</button>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php } ?>
+                <?php endif; ?>
             </div>
-        </div>
-
-        <label>
-            <input class="tab-c" type="radio" name="tab-3">
-            肉
-        </label>
-        <div>ぜひお好みの色にアレンジしてみてください。</div>
-
-        <label>
-            <input class="tab-c" type="radio" name="tab-3">
-            魚
-        </label>
-        <div>もちろんレスポンシブ対応で、タブの追加にも対応しています。</div>
+        <?php endforeach; ?>
     </div>
 
     <div class="huton">
@@ -268,7 +277,9 @@
 </body>
 
 <script>
+    // foodcheck.phpのJavaScriptを流用し、クラス名に合わせて修正
     document.querySelectorAll('.item').forEach(item => {
+        // item内の要素をクラス名で取得
         const down = item.querySelector('.down');
         const up = item.querySelector('.up');
         const box = item.querySelector('.textBox');
@@ -288,6 +299,8 @@
             num++;
             box.value = num;
         });
+
+        // food_stock.phpには変更・削除ボタンがないため、関連する処理は削除
     });
 </script>
 
