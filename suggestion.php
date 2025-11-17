@@ -9,6 +9,12 @@
         background-color: #FCC800;
     }
 
+    .modoru button {
+        background-color: #E97132;
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+
     /* body img のスタイルは、.image-container img に移動・修正 */
     /* body img のスタイルは、.image-item img に移動・修正したため削除 */
 
@@ -91,6 +97,11 @@
 </style>
 
 <body>
+    <!-- 戻るボタン -->
+    <div class=modoru>
+        <a href="product.php"><button>冷蔵庫に戻る</button></a>
+    </div>
+    <!-- 検索バー -->
     <nav class="navbar">
         <div class="container-fluid">
             <form class="d-flex" role="search">
@@ -99,6 +110,8 @@
             </form>
         </div>
     </nav>
+
+    <!-- レシピ -->
     <div class="image-container">
         <div class="image-item">
             <img src="image/yasai.png" alt="レタス1">
