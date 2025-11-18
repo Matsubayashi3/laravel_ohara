@@ -23,7 +23,7 @@ $command = escapeshellcmd($python_executable) . ' ' .
     $new_img_name = 'add_' . $id . '.jpg';  // 例: add_1.jpg
 
 //画像を保存（リネーム後のファイル名で保存）
-move_uploaded_file($_FILES['file']['tmp_name'], 'image/冷蔵庫/' . $new_img_name);
+move_uploaded_file($_FILES['file']['tmp_name'], 'image/freeze/' . $new_img_name);
 exec($command, $output);
 print("<br>");
 var_dump($output);
