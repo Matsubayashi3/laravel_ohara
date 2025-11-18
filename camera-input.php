@@ -11,6 +11,7 @@
         flex-direction: column;
         align-items: center;
         padding: 20px;
+        background-color: #FCC800;
     }
 
     /* ここからカメラ */
@@ -69,14 +70,31 @@
         min-width: 150px;
         /* 最小幅を設定して極端に小さくなるのを防ぐ */
     }
+
+    .file-button::file-selector-button {
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .upload {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 8px 16px;
+        background-color: #E97132;
+    }
+
+    input[type="file"] {
+        display: block;
+        margin: 0 auto 20px auto;
+    }
 </style>
 
 <body>
     <!-- ファイル選択から画像 -->
-    <form id="file-select-form" action="camera-output.php" method='post' enctype="multipart/form-data">
+    <form id="file-select-form" action="camera-output.php" method='post' enctype="multipart/form-data" style=" text-align:center;">
         <img id="preview" style="display:none; max-width:300px;">
         <input type="file" accept="image/*" onchange="showPreview(this)" name="file">
-        <input type='submit' value='アップロード'>
+        <input type='submit' class="upload" value='アップロード'>
     </form>
 
     <script>
