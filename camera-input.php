@@ -7,6 +7,10 @@
 <!-- 個別ブロック-->
 <style>
     body {
+        background-color: #FCC800;
+    }
+
+    body div {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -87,15 +91,30 @@
         display: block;
         margin: 0 auto 20px auto;
     }
+
+    .color {
+        background-color: white;
+        margin: 20px 20px 20px 20px;
+        padding: 30px;
+    }
+
+    .btn {
+        background-color: #E97132;
+        margin-top: 20px;
+        margin-left: 30px;
+    }
 </style>
 
 <body>
+    <a href="select.php"><button class="btn">戻る</button></a>
     <!-- ファイル選択から画像 -->
-    <form id="file-select-form" action="camera-output.php" method='post' enctype="multipart/form-data" style=" text-align:center;">
-        <img id="preview" style="display:none; max-width:300px;">
-        <input type="file" accept="image/*" onchange="showPreview(this)" name="file">
-        <input type='submit' class="upload" value='アップロード'>
-    </form>
+    <div class="color">
+        <form id="file-select-form" action="camera-output.php" method='post' enctype="multipart/form-data" style=" text-align:center;">
+            <img id="preview" style="display:none; max-width:300px;">
+            <input type="file" accept="image/*" onchange="showPreview(this)" name="file">
+            <input type='submit' class="upload" value='アップロード'>
+        </form>
+    </div>
 
     <script>
         function showPreview(input) {
