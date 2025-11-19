@@ -6,6 +6,7 @@
 <!-- メニューの読み込み -->
 
 <!-- DB接続ファイルの読み込み -->
+<?php include 'dbconect.php' ?>
 
 
 
@@ -20,7 +21,66 @@
 <hr> -->
 
 <?php
-//検索処理
+// stock_dataへの登録処理
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
+    $user_id = $_SESSION['users_data']['user_id'] ?? null;
+    $food_counts = $_POST['food_count'] ?? [];
+
+    if ($user_id && !empty($food_counts)) {
+        $pdo->beginTransaction();
+        try {
+            foreach ($food_counts as $food_name => $count) {
+                $count = (int)$count;
+
+                // 1. food_dataからfood_idを取得
+                $sql_food_id = $pdo->prepare('SELECT food_id FROM food_data WHERE food_name = :food_name');
+                $sql_food_id->bindValue(':food_name', $food_name, PDO::PARAM_STR);
+                $sql_food_id->execute();
+                $food_info = $sql_food_id->fetch(PDO::FETCH_ASSOC);
+
+                if ($food_info && $count > 0) {
+                    $food_id = $food_info['food_id'];
+
+                    // 2. stock_dataに存在するか確認
+                    $sql_check = $pdo->prepare('SELECT count FROM stock_data WHERE user_id = :user_id AND food_id = :food_id');
+                    $sql_check->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+                    $sql_check->bindValue(':food_id', $food_id, PDO::PARAM_INT);
+                    $sql_check->execute();
+                    $existing_stock = $sql_check->fetch(PDO::FETCH_ASSOC);
+
+                    if ($existing_stock) {
+                        // 3. 存在すれば更新
+                        $new_count = $existing_stock['count'] + $count;
+                        $sql_update = $pdo->prepare('UPDATE stock_data SET count = :count, updated_at = NOW() WHERE user_id = :user_id AND food_id = :food_id');
+                        $sql_update->bindValue(':count', $new_count, PDO::PARAM_INT);
+                        $sql_update->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+                        $sql_update->bindValue(':food_id', $food_id, PDO::PARAM_INT);
+                        $sql_update->execute();
+                    } else {
+                        // 4. 存在しなければ新規挿入
+                        $sql_insert = $pdo->prepare('INSERT INTO stock_data (user_id, food_id, count) VALUES (:user_id, :food_id, :count)');
+                        $sql_insert->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+                        $sql_insert->bindValue(':food_id', $food_id, PDO::PARAM_INT);
+                        $sql_insert->bindValue(':count', $count, PDO::PARAM_INT);
+                        $sql_insert->execute();
+                    }
+                }
+            }
+            $pdo->commit();
+            // 登録成功後、セッションの検出データをクリアしてリダイレクト
+            unset($_SESSION['detected_foods']);
+            header('Location: product.php?status=success'); // product.phpは冷蔵庫の中身を表示するページと仮定
+            exit;
+        } catch (PDOException $e) {
+            $pdo->rollBack();
+            error_log("Stock data registration failed: " . $e->getMessage());
+            // エラーメッセージをユーザーに表示するなどの処理
+            echo "<p style='color:red;'>食材の登録中にエラーが発生しました。</p>";
+        }
+    } elseif (!$user_id) {
+        echo "<p style='color:red;'>ユーザー情報が取得できませんでした。ログインしてください。</p>";
+    }
+} //検索処理
 // if (isset($_POST['search'])) { //検索ワードが入力されていたら
 //     //SQL準備
 //     $sql = $pdo->prepare('SELECT * FROM product WHERE name LIKE :search');
@@ -29,13 +89,11 @@
 //     //実行
 //     $sql->execute();
 // } else { //検索ワードが入力されていなかったら（全件表示・デフォルト表示）
-//     //DBから商品データの取り出し
+//     // DBから商品データの取り出し
 //     $sql = $pdo->query('SELECT * FROM product');
 // }
 // //表示ブロック
-?>
-
-<style>
+?><style>
     body {
         background-color: #FCC800;
     }
@@ -308,55 +366,60 @@
 <body>
     <h4 style="text-align: center;">追加食材確認</h4>
 
-    <div>
+    <form action="foodcheck.php" method="post">
         <div class="yasai-container">
             <?php
-            $test_list = [
-                'レタス',
-                'トマト',
-                'じゃがいも',
-                'にんじん',
-                'たまねぎ',
-                'たまねぎ',
-                'たまねぎ',
-                'たまねぎ',
-                'たまねぎ',
-                'たまねぎ',
-                'たまねぎ',
-                'たまねぎ',
-                'たまねぎ',
-                'たまねぎ',
-            ];
+            // セッションから検出された食材データを取得
+            $detected_foods = $_SESSION['detected_foods'] ?? [];
 
-            $test_list2 = [
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
-                'yasai.png',
+            // 食材情報を格納する配列
+            $food_items = [];
 
-            ];
+            // 各食材についてDBから情報を取得
+            foreach ($detected_foods as $item) {
+                $food_name = $item[0];
+                $count = $item[1];
+
+                // food_dataテーブルから食材情報を検索
+                $sql = $pdo->prepare('SELECT food_id, food_category FROM food_data WHERE food_name = :food_name');
+                $sql->bindValue(':food_name', $food_name, PDO::PARAM_STR);
+                $sql->execute();
+                $food_info = $sql->fetch(PDO::FETCH_ASSOC);
+
+                // 画像パスを決定（food_idがあればそれを使用、なければデフォルト）
+                if ($food_info) {
+                    $image_path = "image/食材/{$food_info['food_id']}.jpg";
+                    // 画像ファイルが存在しない場合はデフォルト画像を使用
+                    if (!file_exists($image_path)) {
+                        $image_path = "image/yasai.png";
+                    }
+                } else {
+                    $image_path = "image/yasai.png";
+                }
+
+                // 配列に追加
+                $food_items[] = [
+                    'name' => $food_name,
+                    'count' => $count,
+                    'image' => $image_path
+                ];
+            }
             ?>
 
 
             <?php
-            for ($num = 0; $num < 10; $num++) {
+            // 検出された食材を表示
+            foreach ($food_items as $food) {
             ?>
                 <div class="item">
                     <!-- 画像を左に配置 -->
-                    <img src="image/<?= $test_list2[$num] ?>" alt="<?= $test_list[$num] ?>">
+                    <img src="<?= htmlspecialchars($food['image']) ?>" alt="<?= htmlspecialchars($food['name']) ?>">
 
                     <!-- テキストとコントロールを右に配置するためのコンテナ -->
                     <div class="item-details">
                         <!-- 1. テキストを数値操作の上に配置 -->
                         <div class="item-name">
-                            <?php echo $test_list[$num] ?>
+                            <?= htmlspecialchars($food['name']) ?>
                         </div>
 
                         <!-- 2. 数値操作とボタンを横並びにするコンテナ -->
@@ -364,8 +427,9 @@
                             <!-- 数値操作 -->
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="0">
+                                <input name="food_count[<?= htmlspecialchars($food['name']) ?>]" type="number" class="textBox btn" value="<?= htmlspecialchars($food['count']) ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
+                                <input type="hidden" name="food_name[]" value="<?= htmlspecialchars($food['name']) ?>">
                             </div>
 
                             <!-- 3. 変更ボタンと削除ボタンを上下に並べるためのコンテナ -->
@@ -378,13 +442,14 @@
                 </div>
             <?php } ?>
         </div>
-    </div>
-    </div>
+        </div>
+        </div>
 
-    <div class="huton">
-        <a href="product.php"><button class="suggestion ">手動で追加</button></a>
-        <a href="product.php"><button class="suggestion btn-right">冷蔵庫に追加</button></a>
-    </div>
+        <div class="huton">
+            <a href="product.php"><button type="button" class="suggestion ">手動で追加</button></a>
+            <button type="submit" name="add_to_stock" class="suggestion btn-right">冷蔵庫に追加</button>
+        </div>
+    </form>
 
 </body>
 
