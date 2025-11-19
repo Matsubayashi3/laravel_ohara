@@ -8,6 +8,20 @@
 <!-- DB接続ファイルの読み込み -->
 <?php include 'dbconect.php' ?>
 
+<?php
+// $_SESSION['user_id']が設定されていない場合のWarning対策
+// ログイン機能が未実装、またはログインしていない状態でアクセスされた場合を想定し、
+// 暫定的にuser_idを1に設定するか、適切なエラー処理を行う。
+// ここでは、user_idが未設定の場合は0として、SQL側で対応できるようにする。
+// ただし、stock_dataのuser_idはINT UNSIGNED NOT NULLなので、0は適切ではない可能性がある。
+// ログイン必須のページであればリダイレクトが望ましいが、ここでは暫定的に1を設定する。
+if (!isset($_SESSION['user_id'])) {
+    // 警告を避けるため、暫定的にテストユーザーID (1) を設定
+    // 実際の運用ではログインページへのリダイレクトが必要です
+    $_SESSION['user_id'] = 1;
+}
+?>
+
 
 <!-- 個別ブロック -->
 <!-- 検索ブロック -->
@@ -32,9 +46,14 @@
 //     $sql = $pdo->query('SELECT * FROM product');
 // }
 // //表示ブロック
+$id = $_SESSION['users_data']['user_id'];
 ?>
 
 <style>
+    html {
+        background-color: #FCC800;
+    }
+
     body div {
         background-color: #FCC800;
     }
@@ -86,7 +105,7 @@
         height: auto;
     }
 
-    .yasai-container {
+    .food-container {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
@@ -163,7 +182,7 @@
             width: 30%;
         }
 
-        .yasai-container {
+        .food-container {
             gap: 10px;
         }
 
@@ -194,7 +213,7 @@
             margin-top: 5px;
         }
 
-        .yasai-container {
+        .food-container {
             gap: 15px;
         }
     }
@@ -209,21 +228,25 @@
         </label>
 
         <div>
-            <div class="yasai-container">
+            <div class="food-container">
                 <?php
-                //　ここにDBから野菜データを取得して表示するコードを追加
+                // 野菜データを取得
+                $sql_yasai = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "野菜" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_yasai->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_yasai->execute();
+                $yasai_list = $sql_yasai->fetchAll(PDO::FETCH_ASSOC);
                 ?>
 
                 <!-- 数量操作ボタン -->
                 <?php
-                for ($num = 0; $num < 10; $num++) {
+                foreach ($yasai_list as $item) {
                 ?>
                     <div class="item">
-                        <img src="image/<?= $test_list2[$num] ?>" alt="<?= $test_list[$num] ?>">
-                        <?php echo $test_list[$num] ?>
+                        <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                        <?php echo $item['food_name'] ?>
                         <div class="btn-group" role="group" aria-label="数量操作">
                             <button type="button" class="btn btn-primary down">-</button>
-                            <input name="<?= $test_list[$num] ?>" type="number" class="textBox btn" value="0">
+                            <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
                             <button type="button" class="btn btn-primary up">+</button>
                         </div>
                     </div>
@@ -239,7 +262,34 @@
         </label>
 
         <div>
-            ぜひお好みの色にアレンジしてみてください。
+            <div class="food-container">
+                <?php
+                // 肉データを取得
+                $sql_niku = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "肉" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_niku->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_niku->execute();
+                $niku_list = $sql_niku->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
+                <!-- 数量操作ボタン -->
+                <?php
+                if ($niku_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($niku_list as $item) {
+                ?>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
+            </div>
         </div>
 
 
@@ -250,20 +300,183 @@
         </label>
 
         <div>
-            もちろんレスポンシブ対応で、タブの追加にも対応しています。
+            <div class="food-container">
+                <?php
+                // 魚データを取得
+                $sql_sakana = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "魚" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_sakana->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_sakana->execute();
+                $sakana_list = $sql_sakana->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
+                <!-- 数量操作ボタン -->
+                <?php
+                if ($sakana_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($sakana_list as $item) {
+                ?>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
+            </div>
         </div>
 
-
-        <!-- 主食・粉タグの中身 -->
+        <!-- 主食-粉タグの中身 -->
         <label>
             <input class="tab-c" type="radio" name="tab-3">
-            主食
+            主食-粉
         </label>
 
         <div>
-            もちろんレスポンシブ対応で、タブの追加にも対応しています。
+            <div class="food-container">
+                <?php
+                // 主食-粉データを取得
+                $sql_syusyoku = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "主食-粉" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_syusyoku->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_syusyoku->execute();
+                $syusyoku_list = $sql_syusyoku->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
+                <!-- 数量操作ボタン -->
+                <?php
+                if ($syusyoku_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($syusyoku_list as $item) {
+                ?>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
+            </div>
         </div>
 
+        <!--乳製品タグの中身 -->
+        <label>
+            <input class="tab-c" type="radio" name="tab-3">
+            乳製品
+        </label>
+
+        <div>
+            <div class="food-container">
+                <?php
+                // 乳製品データを取得
+                $sql_nyu = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "乳製品" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_nyu->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_nyu->execute();
+                $nyu_list = $sql_nyu->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
+                <!-- 数量操作ボタン -->
+                <?php
+                if ($nyu_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($nyu_list as $item) {
+                ?>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
+            </div>
+        </div>
+
+        <!-- 果物タグの中身 -->
+        <label>
+            <input class="tab-c" type="radio" name="tab-3">
+            果物
+        </label>
+
+        <div>
+            <div class="food-container">
+                <?php
+                // 果物データを取得
+                $sql_fruit = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "果物" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_fruit->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_fruit->execute();
+                $fruit_list = $sql_fruit->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
+                <!-- 数量操作ボタン -->
+                <?php
+                if ($fruit_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($fruit_list as $item) {
+                ?>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
+            </div>
+        </div>
+
+        <!-- その他タグの中身 -->
+        <label>
+            <input class="tab-c" type="radio" name="tab-3">
+            その他
+        </label>
+
+        <div>
+            <div class="food-container">
+                <?php
+                // その他データを取得
+                $sql_sonota = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "その他" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_sonota->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_sonota->execute();
+                $sonota_list = $sql_sonota->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
+                <!-- 数量操作ボタン -->
+                <?php
+                if ($sonota_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($sonota_list as $item) {
+                ?>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
+            </div>
+        </div>
 
         <!-- 調味料タグの中身 -->
         <label>
@@ -272,9 +485,35 @@
         </label>
 
         <div>
-            もちろんレスポンシブ対応で、タブの追加にも対応しています。
-        </div>
+            <div class="food-container">
+                <?php
+                // 調味料データを取得
+                $sql_tyoumi = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "調味料" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_tyoumi->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_tyoumi->execute();
+                $tyoumi_list = $sql_tyoumi->fetchAll(PDO::FETCH_ASSOC);
+                ?>
 
+                <!-- 数量操作ボタン -->
+                <?php
+                if ($tyoumi_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($tyoumi_list as $item) {
+                ?>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
+            </div>
+        </div>
 
         <!-- スパイスタグの中身 -->
         <label>
@@ -283,8 +522,37 @@
         </label>
 
         <div>
-            もちろんレスポンシブ対応で、タブの追加にも対応しています。
+            <div class="food-container">
+                <?php
+                // スパイスデータを取得
+                $sql_spice = $pdo->prepare('SELECT fd.food_name, fd.food_id, sd.count FROM food_data fd JOIN stock_data sd ON fd.food_id = sd.food_id WHERE fd.food_category = "スパイス" AND sd.count > 0 AND sd.user_id = :user_id');
+                $sql_spice->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $sql_spice->execute();
+                $spice_list = $sql_spice->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
+                <!-- 数量操作ボタン -->
+                <?php
+                if ($spice_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($spice_list as $item) {
+                ?>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
+            </div>
         </div>
+
+
     </div>
 
     <div class="huton">
@@ -300,7 +568,7 @@
         const box = item.querySelector('.textBox');
 
         // 初期値設定
-        let num = parseInt(box.value) || 0;
+        let num = parseInt(box.value) || <?php ?>;
         box.value = num;
 
         down.addEventListener('click', () => {

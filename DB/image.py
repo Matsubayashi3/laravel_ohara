@@ -27,7 +27,7 @@ def main():
 
     # 指定回数繰り返して保存
     for i in range(repeat_count):
-        filename = f'image_{start_index + i}.jpg'  # 例: image_1.jpg
+        filename = f'{start_index + i}.jpg'  # 例: 1.jpg
         destination_path = save_dir / filename
         try:
             shutil.copy(str(source_image), str(destination_path))
