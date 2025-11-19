@@ -12,11 +12,40 @@
 $id = $_SESSION['users_data']['user_id'];
 var_dump($_FILES);
 $img_name = $_FILES['file']['name'];
+$python_executable = 'python';
+$python_script = __DIR__ . '/gemini.py';
 
-// ファイル名をリネーム（タイムスタンプ + ユーザーID + 拡張子）
-$new_img_name = 'add_' . $id . '.jpg';  // 例: add_1.jpg
+$command = escapeshellcmd($python_executable) . ' ' .
+    escapeshellarg($python_script) . ' ' .
+    escapeshellarg($id) . ' ' .
+
+    // ファイル名をリネーム（タイムスタンプ + ユーザーID + 拡張子）
+    $new_img_name = 'add_' . $id . '.jpg';  // 例: add_1.jpg
 
 //画像を保存（リネーム後のファイル名で保存）
 move_uploaded_file($_FILES['file']['tmp_name'], 'image/冷蔵庫/' . $new_img_name);
+exec($command, $output);
+print("<br>");
+var_dump($output);
+// 2. JSONデコード（PHP配列に変換）
+$data = json_decode($output[0], true);
+// //SQL準備
+// $sql = $pdo->prepare('SELECT food_id FROM food_data where food_name :food_name ');
+// //値を紐づけ
+// $sql->bindValue(':food_name', $output, PDO::PARAM_STR);
+// //実行
+// $sql->execute();
+
+// 3. エラーチェックと foreach 処理
+if (is_array($data)) {
+    foreach ($data as $item) {
+        $name = $item[0];
+        $count = $item[1];
+        echo "食材:$name,個数:$count<br>";
+    }
+} else {
+    echo "❌ JSONデコード失敗: " . json_last_error_msg();
+}
+?>
 
 ?>
