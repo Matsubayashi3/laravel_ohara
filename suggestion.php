@@ -19,10 +19,14 @@ $command = escapeshellcmd($python_executable) . ' ' .
 exec($command, $output);
 $json = str_replace('][', ',', $output[0]);
 $data = json_decode($json, true);
-var_dump($data);
+// var_dump($data);
 ?>
 
 <style>
+    body {
+        background-color: #FCC800;
+    }
+
     .modoru button {
         background-color: #E97132;
         margin-top: 20px;
@@ -119,22 +123,18 @@ var_dump($data);
 
     <!-- レシピ -->
     <div class="image-container">
-        <div class="image-item">
-            <img src="image/yasai.png" alt="レタス1">
-            <p class="caption">レタス</p>
-        </div>
-        <div class="image-item">
-            <img src="image/yasai.png" alt="レタス2">
-            <p class="caption">レタス</p>
-        </div>
-        <div class="image-item">
-            <img src="image/yasai.png" alt="レタス3">
-            <p class="caption">レタス</p>
-        </div>
-        <div class="image-item">
-            <img src="image/yasai.png" alt="レタス4">
-            <p class="caption">レタス</p>
-        </div>
+        <?php foreach ($data as $index => $item): ?>
+            <?php if ($index === 0): ?>
+                <!-- 料理名 -->
+                <img style="width:500px; height:auto;" src="image/recipe/<?= $id ?>.jpg" alt="料理画像">
+                <h2 style="text-align: center; margin-top: 20px; font-size: 20px;"><?php echo $item[0]; ?></h2>
+            <?php else: ?>
+                <!-- 料理画像と必要材料・分量 -->
+                <div class="image-item">
+                    <div class="caption"><?php echo ($item[0] . ' - ' . $item[1]); ?></div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
     </div>
 
     <!-- フッターの読み込み -->

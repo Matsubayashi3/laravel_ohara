@@ -10,7 +10,6 @@
 
 <?php
 $id = $_SESSION['users_data']['user_id'];
-var_dump($_FILES);
 $img_name = $_FILES['file']['name'];
 $python_executable = 'python';
 $python_script = __DIR__ . '/gemini.py';
@@ -47,10 +46,6 @@ if (is_array($data)) {
 } else {
     // echo "❌ JSONデコード失敗: " . json_last_error_msg();
     echo "読み込み失敗しました。もう一度撮影してください。"; ?>
-    <!-- 戻るボタン -->
-    <div class=modoru>
-        <a href="camera-input.php"><button>冷蔵庫に戻る</button></a>
-    </div>
 <?php
 }
 ?>

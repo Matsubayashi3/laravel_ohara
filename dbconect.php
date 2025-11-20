@@ -8,7 +8,7 @@ try {
         "root",
         ""
     );
-    echo '接続成功';
+    // echo '接続成功';
 } catch (PDOException $e) {
     // エラーが起きた時の処理
     echo '失敗：' . $e->getMessage();
