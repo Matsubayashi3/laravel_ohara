@@ -9,7 +9,7 @@
 <!-- 個別ブロック -->
 <?php
 // $id = $_SESSION['user_data']['user_id'];
-$id = 4;
+$id = 4; //テスト用
 $python_executable = 'python';
 $python_script = __DIR__ . '/recipe.py';
 $command = escapeshellcmd($python_executable) . ' ' .
