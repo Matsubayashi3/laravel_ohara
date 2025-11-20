@@ -1,10 +1,10 @@
 import google.generativeai as genai
 import traceback
-import sys
 import mysql.connector
-import json 
 from pprint import pprint
-
+from PIL import Image
+import io
+import os
 
 def gemini_recipe_example():
     try:
@@ -28,7 +28,7 @@ def gemini_recipe_example():
                                 """
         cursor.execute(select_all_data_query)
         food_items = cursor.fetchall()
-        print(food_items)
+        # print(food_items)
         # genai.configure(api_key="AIzaSyD5eSZoK_qCu6vgsmybbqmlMRqpcea62Ds")
         genai.configure(api_key="AIzaSyD4vBXreTog5iqkPJ8Q35hk3ONTRi3HoBs")
         
@@ -41,6 +41,30 @@ def gemini_recipe_example():
         foods = response.text
         print(foods)
         
+        # APIキー設定
+        genai.configure(api_key="AIzaSyD4vBXreTog5iqkPJ8Q35hk3ONTRi3HoBs")
+
+        # モデル指定
+        model = genai.GenerativeModel("gemini-2.5-flash-image")
+
+        # プロンプト
+        prompt = foods+"""この料理の画像一つを生成してください。
+                文字などは表示せず料理だけを出してください。
+                画像は美味しそうに見えるようにしてください。
+                """
+
+        # 保存先ディレクトリを指定
+        save_dir = "C:/xampp/htdocs/php/cooking-AI-php/image/recipe"
+
+        # 生成リクエスト
+        response = model.generate_content(prompt)
+
+        # parts から画像を取り出して保存
+        for i, part in enumerate(response.parts):
+            if part.inline_data:  # 画像データがある場合
+                img = Image.open(io.BytesIO(part.inline_data.data))
+                file_path = os.path.join(save_dir, f"{id}.png")
+                img.save(file_path)
         
         cursor.close()
         conn.close()
