@@ -4,12 +4,13 @@ import mysql.connector
 from pprint import pprint
 from PIL import Image
 import io
+import sys
 import os
 
 def gemini_recipe_example():
     try:
-        # id = sys.argv[1] if len(sys.argv) > 1 else "0"
-        id = 4 # テスト用に固定
+        id = sys.argv[1] if len(sys.argv) > 1 else "0"
+        # id = 4 # テスト用に固定
         conn = mysql.connector.connect(
             host="127.0.0.1",      # localhost より 127.0.0.1 が安定
             user="root",
@@ -54,7 +55,7 @@ def gemini_recipe_example():
                 """
 
         # 保存先ディレクトリを指定
-        save_dir = "C:/xampp/htdocs/php/cooking-AI-php/image/recipe"
+        save_dir = "C:/xampp2025/htdocs/laravel/cooking-AI-php/image/recipe"
 
         # 生成リクエスト
         response = model.generate_content(prompt)
@@ -63,7 +64,7 @@ def gemini_recipe_example():
         for i, part in enumerate(response.parts):
             if part.inline_data:  # 画像データがある場合
                 img = Image.open(io.BytesIO(part.inline_data.data))
-                file_path = os.path.join(save_dir, f"{id}.png")
+                file_path = os.path.join(save_dir, f"{id}.jpg")
                 img.save(file_path)
         
         cursor.close()
