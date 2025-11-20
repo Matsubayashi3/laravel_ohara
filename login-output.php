@@ -23,6 +23,7 @@ $user = $sql->fetch(PDO::FETCH_ASSOC);
 
 //デバック
 echo var_dump($user);
+echo var_dump($_POST);
 
 //認証ブロック
 if ($user !== false && $_POST['password'] == $user['password']) {

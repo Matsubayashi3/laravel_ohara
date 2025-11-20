@@ -1,0 +1,2 @@
+USE cookingai;
+SHOW TABLES;

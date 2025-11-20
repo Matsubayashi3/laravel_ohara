@@ -3,11 +3,15 @@
 <?php session_start(); ?>
 <!-- ヘッダーの読み込み -->
 <?php include 'header.php' ?>
+<!-- DB接続ファイルの読み込み -->
+<?php include 'dbconect.php' ?>
 
-<style>
-    body {
-        background-color: #FCC800;
-    }
+<!-- 個別ブロック -->
+<?php
+// $id = $_SESSION['user_data']['user_id'];
+$id = 4;
+$python_executable = 'python';
+$python_script = __DIR__ . '/recipe.py';
 
     .modoru button {
         background-color: #E97132;
@@ -17,11 +21,13 @@
 
     /* body img のスタイルは、.image-container img に移動・修正 */
     /* body img のスタイルは、.image-item img に移動・修正したため削除 */
+$command = escapeshellcmd($python_executable) . ' ' .
+    escapeshellarg($python_script) . ' ' .
+    escapeshellarg($id) . ' ' .
 
-    .navbar {
-        /* 垂直方向の中央寄せは維持 */
-        align-items: center;
-    }
+    exec($command, $output);
+echo var_dump($output);
+?>
 
     /* .navbar内の.container-fluidをflexコンテナにし、子要素を中央に配置 */
     .navbar .container-fluid {
