@@ -54,6 +54,10 @@ $id = $_SESSION['users_data']['user_id'];
         background-color: #FCC800;
     }
 
+    body {
+        background-color: #FCC800;
+    }
+
     body div {
         background-color: #FCC800;
     }
@@ -139,7 +143,7 @@ $id = $_SESSION['users_data']['user_id'];
 
     #textBox {
         border: none;
-        background: none;
+        /* background: none; */
         font-size: 18px;
         text-align: center;
         width: 70px;
@@ -156,6 +160,7 @@ $id = $_SESSION['users_data']['user_id'];
     .suggestion {
         margin-top: 100px;
         color: white;
+        border: none;
         padding: 8px 16px;
         background-color: #E97132;
     }
@@ -166,6 +171,16 @@ $id = $_SESSION['users_data']['user_id'];
 
     a {
         text-decoration: none;
+    }
+
+    .modoru {
+        background-color: #E97132;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 20px;
+        margin-left: 30px;
+        margin-bottom: 20px;
     }
 
     /* タブレット表示 (768px以下) */
@@ -220,6 +235,8 @@ $id = $_SESSION['users_data']['user_id'];
 </style>
 
 <body>
+    <a href="select.php"><button class="modoru">戻る</button></a>
+
     <div class="tab-3">
         <!-- 野菜タグの中身 -->
         <label>
@@ -572,7 +589,7 @@ $id = $_SESSION['users_data']['user_id'];
         const box = item.querySelector('.textBox');
 
         // 初期値設定
-        let num = parseInt(box.value) || <?php ?>;
+        let num = parseInt(box.value) || 0;
         box.value = num;
 
         down.addEventListener('click', () => {
