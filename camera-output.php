@@ -8,6 +8,15 @@
 
 <!-- 個別ブロック -->
 
+<style>
+    .modoru button {
+        display: block;
+        margin: 20px auto 0;
+        background-color: #E97132;
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+</style>
 <?php
 $id = $_SESSION['users_data']['user_id'];
 var_dump($_FILES);
@@ -49,7 +58,7 @@ if (is_array($data)) {
     echo "読み込み失敗しました。もう一度撮影してください。"; ?>
     <!-- 戻るボタン -->
     <div class=modoru>
-        <a href="camera-input.php"><button>冷蔵庫に戻る</button></a>
+        <a href="camera-input.php"><button>戻る</button></a>
     </div>
 <?php
 }

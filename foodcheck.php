@@ -360,6 +360,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
             align-items: center;
             gap: 3px;
         }
+
+        .suggestion {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            /* 100pxから縮小 */
+            color: white;
+            padding: 8px 16px;
+            background-color: #E97132;
+            width: 20%;
+        }
+
+
     }
 </style>
 

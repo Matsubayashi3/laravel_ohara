@@ -61,6 +61,20 @@
         color: white;
         font-weight: bold;
     }
+
+    .logout-button {
+        display: block;
+        margin: 0px auto 0px;
+        width: 300px;
+        padding: 10px;
+        background-color: #DD6E35;
+        color: white;
+        border: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
 </style>
 
 <div class="container">

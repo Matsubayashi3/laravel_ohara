@@ -63,7 +63,7 @@ def gemini_image_example():
         model = genai.GenerativeModel("gemini-2.5-flash")
  
         # ローカル画像ファイルのパス
-        image_path = "http://localhost/php/cooking-AI-php/image/freeze/add_"+id+".jpg"
+        image_path = "http://localhost/laravel/cooking-AI-php/image/freeze/add_"+id+".jpg"
         # image_path = "https://osaka-ainou.jp/images/convert/osaka-ainoujp/20240718082815.jpg/image.webp"
         image_data2 = httpx.get(image_path)
         # with open(image_path, "rb") as f:
