@@ -12,16 +12,16 @@
 $id = 4; //テスト用
 $python_executable = 'python';
 $python_script = __DIR__ . '/recipe.py';
-
 $command = escapeshellcmd($python_executable) . ' ' .
     escapeshellarg($python_script) . ' ' .
     escapeshellarg($id);
 
 exec($command, $output);
-
-$data = json_decode($output[0], true);
+$json = str_replace('][', ',', $output[0]);
+$data = json_decode($json, true);
 var_dump($data);
 ?>
+
 <style>
     .modoru button {
         background-color: #E97132;

@@ -239,18 +239,22 @@ $id = $_SESSION['users_data']['user_id'];
 
                 <!-- 数量操作ボタン -->
                 <?php
-                foreach ($yasai_list as $item) {
+                if ($yasai_list == null) {
+                    echo "在庫がありません";
+                } else {
+                    foreach ($yasai_list as $item) {
                 ?>
-                    <div class="item">
-                        <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
-                        <?php echo $item['food_name'] ?>
-                        <div class="btn-group" role="group" aria-label="数量操作">
-                            <button type="button" class="btn btn-primary down">-</button>
-                            <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
-                            <button type="button" class="btn btn-primary up">+</button>
+                        <div class="item">
+                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <?php echo $item['food_name'] ?>
+                            <div class="btn-group" role="group" aria-label="数量操作">
+                                <button type="button" class="btn btn-primary down">-</button>
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <button type="button" class="btn btn-primary up">+</button>
+                            </div>
                         </div>
-                    </div>
-                <?php } ?>
+                <?php }
+                } ?>
             </div>
         </div>
 

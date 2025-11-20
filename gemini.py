@@ -63,7 +63,7 @@ def gemini_image_example():
         model = genai.GenerativeModel("gemini-2.5-flash")
  
         # ローカル画像ファイルのパス
-        image_path = "http://localhost/php/cooking-AI-php/image/freeze/add_"+id+".jpg"
+        image_path = "http://localhost/laravel/cooking-AI-php/image/freeze/add_"+id+".jpg"
         # image_path = "https://osaka-ainou.jp/images/convert/osaka-ainoujp/20240718082815.jpg/image.webp"
         image_data2 = httpx.get(image_path)
         # with open(image_path, "rb") as f:
@@ -71,7 +71,7 @@ def gemini_image_example():
         image_data = base64.b64encode(image_data2.content).decode("utf-8")
  
         prompt = """画像の食材の個数を教えてください返り値は以下の例でお願いします。
-                 食材名は"""+food+"""ここから参照してください
+                 食材名は"""+food+"""ここから参照してください。ない場合はエラーとしてください。
 #                返り値を配列として登録するのを想定していますので、以下の形式のみで出力すること。
 #                [["ブロッコリー", 1], ["かぼちゃ", 2],["小松菜",2]]
 #                """
