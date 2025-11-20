@@ -55,13 +55,6 @@ if (is_array($data)) {
 } else {
     // echo "❌ JSONデコード失敗: " . json_last_error_msg();
     echo "読み込み失敗しました。もう一度撮影してください。"; ?>
-<<<<<<< HEAD
-=======
-    <!-- 戻るボタン -->
-    <div class=modoru>
-        <a href="camera-input.php"><button>戻る</button></a>
-    </div>
->>>>>>> 1401b86ef23daa1ad84938d4c1ece7f0d4e5e1ae
 <?php
 }
 ?>
