@@ -25,6 +25,3 @@ for i, part in enumerate(response.parts):
         img = Image.open(io.BytesIO(part.inline_data.data))
         file_path = os.path.join(save_dir, f"vegetable_{i}.png")
         img.save(file_path)
-        print(f"✅ 画像を保存しました: {file_path}")
-    elif part.text:  # テキスト応答が返ってきた場合
-        print("テキスト応答:", part.text)
