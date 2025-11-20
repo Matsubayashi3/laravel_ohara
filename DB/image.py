@@ -13,7 +13,7 @@ def main():
     save_dir.mkdir(parents=True, exist_ok=True)
 
     # 元画像ファイル（アップロードされた画像など）
-    source_image = base_dir / 'image' / '食材' / '4.png'  # 実際のパスに変更してください
+    source_image = base_dir / 'image' / '食材' / '1.png'  # 実際のパスに変更してください
     if not source_image.exists():
         print(f'❌ 元画像が見つかりません: {source_image}')
         return 1
