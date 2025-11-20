@@ -9,25 +9,25 @@
 <!-- 個別ブロック -->
 <?php
 // $id = $_SESSION['user_data']['user_id'];
-$id = 4;
+$id = 4; //テスト用
 $python_executable = 'python';
 $python_script = __DIR__ . '/recipe.py';
 
+$command = escapeshellcmd($python_executable) . ' ' .
+    escapeshellarg($python_script) . ' ' .
+    escapeshellarg($id);
+
+exec($command, $output);
+
+$data = json_decode($output[0], true);
+var_dump($data);
+?>
+<style>
     .modoru button {
         background-color: #E97132;
         margin-top: 20px;
         margin-left: 30px;
     }
-
-    /* body img のスタイルは、.image-container img に移動・修正 */
-    /* body img のスタイルは、.image-item img に移動・修正したため削除 */
-$command = escapeshellcmd($python_executable) . ' ' .
-    escapeshellarg($python_script) . ' ' .
-    escapeshellarg($id) . ' ' .
-
-    exec($command, $output);
-echo var_dump($output);
-?>
 
     /* .navbar内の.container-fluidをflexコンテナにし、子要素を中央に配置 */
     .navbar .container-fluid {

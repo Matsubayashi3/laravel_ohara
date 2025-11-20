@@ -9,15 +9,14 @@ from pprint import pprint
 def gemini_recipe_example():
     try:
         # id = sys.argv[1] if len(sys.argv) > 1 else "0"
-        id = 4
-        # MySQLに接続（use_pure=True で C 拡張によるクラッシュを回避）
+        id = 4 # テスト用に固定
         conn = mysql.connector.connect(
-            host="127.0.0.1",      # localhost より 127.0.0.1 がより安定
+            host="127.0.0.1",      # localhost より 127.0.0.1 が安定
             user="root",
             password="",
             port=3306,
             database="cookingai",
-            use_pure=True          # Pure Python 実装を使用
+            use_pure=True          
         )
         cursor = conn.cursor()
         # クエリを実行
@@ -30,13 +29,14 @@ def gemini_recipe_example():
         cursor.execute(select_all_data_query)
         food_items = cursor.fetchall()
         print(food_items)
-        genai.configure(api_key="AIzaSyD5eSZoK_qCu6vgsmybbqmlMRqpcea62Ds")
+        # genai.configure(api_key="AIzaSyD5eSZoK_qCu6vgsmybbqmlMRqpcea62Ds")
+        genai.configure(api_key="AIzaSyD4vBXreTog5iqkPJ8Q35hk3ONTRi3HoBs")
+        
         model = genai.GenerativeModel("gemini-2.5-flash")
-        prompt = "冷蔵庫にある食材からレシピを提案してください"+str(food_items)+\
-                    "これらの食材を使った簡単で美味しい料理のレシピを教えてください。""""
-                    返り値を配列として登録するのを想定していますので、以下の形式のみで出力すること。
-#                   [["料理名"]][[食材名, 数量], [食材名, 数量], ...]
-                    """
+        prompt = "冷蔵庫にある食材からレシピを提案してください" + str(food_items) + \
+         "これらの食材を使った簡単で美味しい料理のレシピを1つ教えてください。" \
+         '文字列として出力してください。' \
+         '形式: [["料理名", [["食材名", 数量], ["食材名", 数量], ...]]]'
         response = model.generate_content([prompt])
         foods = response.text
         print(foods)
