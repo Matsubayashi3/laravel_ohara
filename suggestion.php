@@ -12,15 +12,14 @@
 $id = 4;
 $python_executable = 'python';
 $python_script = __DIR__ . '/recipe.py';
-
-/* body img のスタイルは、.image-container img に移動・修正 */
-/* body img のスタイルは、.image-item img に移動・修正したため削除 */
 $command = escapeshellcmd($python_executable) . ' ' .
     escapeshellarg($python_script) . ' ' .
-    escapeshellarg($id) . ' ' .
+    escapeshellarg($id);
 
-    exec($command, $output);
-echo var_dump($output);
+exec($command, $output);
+$json = str_replace('][', ',', $output[0]);
+$data = json_decode($json, true);
+var_dump($data);
 ?>
 
 <style>
