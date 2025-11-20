@@ -45,8 +45,12 @@ if (is_array($data)) {
     header('Location: foodcheck.php');
     exit;
 } else {
-    echo "❌ JSONデコード失敗: " . json_last_error_msg();
+    // echo "❌ JSONデコード失敗: " . json_last_error_msg();
+    echo "読み込み失敗しました。もう一度撮影してください。"; ?>
+    <!-- 戻るボタン -->
+    <div class=modoru>
+        <a href="camera-input.php"><button>冷蔵庫に戻る</button></a>
+    </div>
+<?php
 }
-?>
-
 ?>
