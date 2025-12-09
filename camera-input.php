@@ -30,7 +30,7 @@
     #capture-button {
         width: 100px;
         height: 100px;
-        border-radius: 50%;
+        /* border-radius: 50%; */
         background-color: gray;
         border: 10px solid white;
         cursor: pointer;
@@ -44,7 +44,7 @@
         content: '';
         width: 60px;
         height: 60px;
-        border-radius: 50%;
+        /* border-radius: 50%; */
         background-color: white;
     }
 
@@ -96,8 +96,7 @@
 
     .color {
         background-color: white;
-        margin: 20px 20px 20px 20px;
-        padding: 30px;
+        margin: 20px;
     }
 
     .btn {
@@ -105,6 +104,7 @@
         margin-top: 20px;
         margin-left: 30px;
         color: white;
+        border-radius: 0;
     }
 </style>
 

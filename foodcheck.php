@@ -276,6 +276,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
 
     .huton {
         text-align: center;
+        /* ボタンを中央に配置 */
+    }
+
+    .huton button {
+        border: none;
     }
 
     a {

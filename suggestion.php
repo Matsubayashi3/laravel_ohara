@@ -31,6 +31,10 @@ $data = json_decode($json, true);
         background-color: #E97132;
         margin-top: 20px;
         margin-left: 30px;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-bottom: 20px;
     }
 
     /* .navbar内の.container-fluidをflexコンテナにし、子要素を中央に配置 */
