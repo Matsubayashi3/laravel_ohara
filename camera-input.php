@@ -85,6 +85,8 @@
         margin-top: 30px;
         padding: 8px 16px;
         background-color: #E97132;
+        color: white;
+        border: none;
     }
 
     input[type="file"] {
@@ -102,6 +104,7 @@
         background-color: #E97132;
         margin-top: 20px;
         margin-left: 30px;
+        color: white;
     }
 </style>
 

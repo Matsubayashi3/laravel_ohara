@@ -8,8 +8,7 @@
 
 <!-- 個別ブロック -->
 <?php
-// $id = $_SESSION['user_data']['user_id'];
-$id = 4; //テスト用
+$id = $_SESSION['users_data']['user_id'];
 $python_executable = 'python';
 $python_script = __DIR__ . '/recipe.py';
 $command = escapeshellcmd($python_executable) . ' ' .
@@ -17,6 +16,7 @@ $command = escapeshellcmd($python_executable) . ' ' .
     escapeshellarg($id);
 
 exec($command, $output);
+// var_dump($output);
 $json = str_replace('][', ',', $output[0]);
 $data = json_decode($json, true);
 // var_dump($data);
@@ -111,7 +111,7 @@ $data = json_decode($json, true);
     <div class=modoru>
         <a href="product.php"><button>冷蔵庫に戻る</button></a>
     </div>
-    <!-- 検索バー -->
+    <!-- 検索バー
     <nav class="navbar">
         <div class="container-fluid">
             <form class="d-flex" role="search">
@@ -119,7 +119,7 @@ $data = json_decode($json, true);
                 <button class="btn" type="submit"><img src="image\musimegane.png" alt="検索"></button>
             </form>
         </div>
-    </nav>
+    </nav> -->
 
     <!-- レシピ -->
     <div class="image-container">
@@ -127,7 +127,7 @@ $data = json_decode($json, true);
             <?php if ($index === 0): ?>
                 <!-- 料理名 -->
                 <img style="width:500px; height:auto;" src="image/recipe/<?= $id ?>.jpg" alt="料理画像">
-                <h2 style="text-align: center; margin-top: 20px; font-size: 20px;"><?php echo $item[0]; ?></h2>
+                <h2 style="text-align: center; margin-top: 20px;"><?php echo $item[0]; ?></h2>
             <?php else: ?>
                 <!-- 料理画像と必要材料・分量 -->
                 <div class="image-item">
