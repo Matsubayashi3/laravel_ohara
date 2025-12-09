@@ -283,7 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
     }
 
     .btn-right {
-        margin-left: 70px;
+        /* margin-left: 70px; */
     }
 
     /* タブレット表示 (768px以下) */
@@ -446,7 +446,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
 
                             <!-- 3. 変更ボタンと削除ボタンを上下に並べるためのコンテナ -->
                             <div class="action-buttons">
-                                <button type="button" class="btn  change-btn">変更</button>
                                 <button type="button" class="btn  delete-btn">削除</button>
                             </div>
                         </div>
@@ -458,7 +457,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
         </div>
 
         <div class="huton">
-            <a href="product.php"><button type="button" class="suggestion ">手動で追加</button></a>
             <button type="submit" name="add_to_stock" class="suggestion btn-right">冷蔵庫に追加</button>
         </div>
     </form>

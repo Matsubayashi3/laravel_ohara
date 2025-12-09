@@ -16,9 +16,10 @@ $command = escapeshellcmd($python_executable) . ' ' .
     escapeshellarg($id);
 
 exec($command, $output);
+// var_dump($output);
 $json = str_replace('][', ',', $output[0]);
 $data = json_decode($json, true);
-var_dump($data)
+// var_dump($data);
 ?>
 
 <style>
@@ -110,7 +111,7 @@ var_dump($data)
     <div class=modoru>
         <a href="product.php"><button>冷蔵庫に戻る</button></a>
     </div>
-    <!-- 検索バー -->
+    <!-- 検索バー
     <nav class="navbar">
         <div class="container-fluid">
             <form class="d-flex" role="search">
@@ -118,7 +119,7 @@ var_dump($data)
                 <button class="btn" type="submit"><img src="image\musimegane.png" alt="検索"></button>
             </form>
         </div>
-    </nav>
+    </nav> -->
 
     <!-- レシピ -->
     <div class="image-container">

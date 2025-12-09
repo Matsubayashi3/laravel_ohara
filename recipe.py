@@ -36,8 +36,8 @@ def gemini_recipe_example():
         model = genai.GenerativeModel("gemini-2.5-flash")
         prompt = "冷蔵庫にある食材からレシピを提案してください" + str(food_items) + \
          "これらの食材を使った簡単で美味しい料理のレシピを1つ教えてください。" \
-         '文字列として出力してください。' \
-         '形式: [["料理名", [["食材名", 数量], ["食材名", 数量], ...]]]'
+         '文字列として改行せず出力してください。' \
+         '形式: [["料理名"],["食材名", 数量], ["食材名", 数量], ...]]]'
         response = model.generate_content([prompt])
         foods = response.text
         print(foods)
@@ -55,7 +55,7 @@ def gemini_recipe_example():
                 """
 
         # 保存先ディレクトリを指定
-        save_dir = "C:/xampp2025/htdocs/laravel/cooking-AI-php/image/recipe"
+        save_dir = "image/recipe"
 
         # 生成リクエスト
         response = model.generate_content(prompt)
