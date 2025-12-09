@@ -476,6 +476,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
         let num = parseInt(box.value) || 0;
         box.value = num;
 
+        down.addEventListener('touchstart', (event) => {
+            event.preventDefault(); // スクロール防止
+            down.click();
+        }, {
+            passive: false
+        });
         down.addEventListener('click', () => {
             if (num > 0) {
                 num--;
@@ -483,6 +489,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
             }
         });
 
+        up.addEventListener('touchstart', (event) => {
+            event.preventDefault(); // スクロール防止
+            up.click();
+        }, {
+            passive: false
+        });
         up.addEventListener('click', () => {
             num++;
             box.value = num;
