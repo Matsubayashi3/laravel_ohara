@@ -107,6 +107,7 @@ $id = $_SESSION['users_data']['user_id'];
     img {
         width: 8rem;
         height: auto;
+        border-radius: 30px;
     }
 
     .food-container {
@@ -262,7 +263,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($yasai_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>" style="border-radius: 30px;">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>" style="border-radius: 30px;">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
@@ -300,7 +301,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($niku_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
@@ -338,7 +339,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($sakana_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
@@ -375,7 +376,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($syusyoku_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
@@ -412,7 +413,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($nyu_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
@@ -449,7 +450,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($fruit_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
@@ -486,7 +487,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($sonota_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
@@ -523,7 +524,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($tyoumi_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
@@ -560,7 +561,7 @@ $id = $_SESSION['users_data']['user_id'];
                     foreach ($spice_list as $item) {
                 ?>
                         <div class="item">
-                            <img src="image/食材/<?= $item['food_id'] ?>.jpg" alt="<?= $item['food_name'] ?>">
+                            <img src="image/食材/<?= $item['food_id'] ?>.png" alt="<?= $item['food_name'] ?>">
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
