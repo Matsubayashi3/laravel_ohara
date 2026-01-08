@@ -52,8 +52,7 @@ import traceback
 import sys
 import json
 import httpx
- 
- 
+
 def gemini_image_example():
     try:
         id = sys.argv[1] if len(sys.argv) > 1 else "0"
@@ -64,10 +63,7 @@ def gemini_image_example():
  
         # ローカル画像ファイルのパス
         image_path = "http://localhost/laravel/cooking-AI-php/image/freeze/add_"+id+".jpg"
-        # image_path = "https://osaka-ainou.jp/images/convert/osaka-ainoujp/20240718082815.jpg/image.webp"
         image_data2 = httpx.get(image_path)
-        # with open(image_path, "rb") as f:
-        #     image_bytes = f.read()
         image_data = base64.b64encode(image_data2.content).decode("utf-8")
  
         prompt = """画像の食材の個数を教えてください返り値は以下の例でお願いします。
@@ -80,13 +76,10 @@ def gemini_image_example():
             prompt
         ])
         gemini = response.text
-        # print(json.dumps(gemini, ensure_ascii=False))
         print(gemini)
- 
- 
+        
     except Exception as e:
-        print(f"❌ 予期しないエラーが発生しました: {type(e).__name__}")
-        print(f"詳細: {e}")
+        print(f"❌ エラー発生: {type(e).__name__}: {e}")
         traceback.print_exc()
        
 # if __name__ == "__main__":

@@ -7,19 +7,15 @@
 
 <!-- DB接続ファイルの読み込み -->
 <?php include 'dbconect.php' ?>
+<!-- 認証チェック機能の読み込み -->
+<?php include 'auth_check.php' ?>
 
 <?php
-// $_SESSION['user_id']が設定されていない場合のWarning対策
-// ログイン機能が未実装、またはログインしていない状態でアクセスされた場合を想定し、
-// 暫定的にuser_idを1に設定するか、適切なエラー処理を行う。
-// ここでは、user_idが未設定の場合は0として、SQL側で対応できるようにする。
-// ただし、stock_dataのuser_idはINT UNSIGNED NOT NULLなので、0は適切ではない可能性がある。
-// ログイン必須のページであればリダイレクトが望ましいが、ここでは暫定的に1を設定する。
-if (!isset($_SESSION['user_id'])) {
-    // 警告を避けるため、暫定的にテストユーザーID (1) を設定
-    // 実際の運用ではログインページへのリダイレクトが必要です
-    $_SESSION['user_id'] = 1;
-}
+// ログインチェック
+requireLogin();
+
+// ユーザーIDをセッションから取得
+$id = $_SESSION['users_data']['user_id'];
 ?>
 
 
@@ -45,8 +41,6 @@ if (!isset($_SESSION['user_id'])) {
 //     //DBから商品データの取り出し
 //     $sql = $pdo->query('SELECT * FROM product');
 // }
-// //表示ブロック
-$id = $_SESSION['users_data']['user_id'];
 ?>
 
 <style>
@@ -92,7 +86,8 @@ $id = $_SESSION['users_data']['user_id'];
         display: none;
         width: 100%;
         /* padding: 1.5em 1em; */
-        background-color: #fff;
+        background-color: #FCC800;
+        padding-top: 25px;
     }
 
     .tab-3 label:has(:checked) {
@@ -285,7 +280,21 @@ $id = $_SESSION['users_data']['user_id'];
         font-size: 18px;
         font-weight: bold;
         color: #333;
-        margin: 0;
+        margin: 0 0 20px 0;
+    }
+
+    .cancel-btn {
+        background-color: #ccc;
+        color: #333;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .cancel-btn:hover {
+        background-color: #bbb;
     }
 
     @keyframes spin {
@@ -645,6 +654,7 @@ $id = $_SESSION['users_data']['user_id'];
         <div class="loading-content">
             <div class="spinner"></div>
             <p class="loading-text">レシピを検索中...</p>
+            <button class="cancel-btn" id="cancel-btn">キャンセル</button>
         </div>
     </div>
 
@@ -674,12 +684,19 @@ $id = $_SESSION['users_data']['user_id'];
     });
 
     // レシピ検索ボタンのローディング処理
+    let searchTimeout;
     document.getElementById('recipe-search').addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById('loading').style.display = 'flex';
-        setTimeout(() => {
+        searchTimeout = setTimeout(() => {
             window.location.href = 'suggestion.php';
-        }, 100);
+        }, 3000);
+    });
+
+    // キャンセルボタンの処理
+    document.getElementById('cancel-btn').addEventListener('click', function() {
+        clearTimeout(searchTimeout);
+        document.getElementById('loading').style.display = 'none';
     });
 </script>
 

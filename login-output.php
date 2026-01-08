@@ -5,6 +5,8 @@
 <?php include 'header.php' ?>
 <!-- DB接続ファイルの読み込み -->
 <?php include 'dbconect.php' ?>
+<!-- 認証チェック機能の読み込み -->
+<?php include 'auth_check.php' ?>
 
 <!-- 個別ブロック -->
 <?php
@@ -21,22 +23,24 @@ $sql->execute();
 //1件だけデータ取り出し(fetch) FETCH_ASSOCで添字つきの配列を返す。ex.添字[name] ->
 $user = $sql->fetch(PDO::FETCH_ASSOC);
 
-//デバック
-echo var_dump($user);
-echo var_dump($_POST);
+// デバッグ（本番環境では削除）
+// echo var_dump($user);
+// echo var_dump($_POST);
 
 //認証ブロック
 if ($user !== false && $_POST['password'] == $user['password']) {
-    // echo 'ログイン成功！';
-    // $_SESSIONの['customer']キーにデータを格納 *二次元連想配列
+    // セッションにユーザー情報を保存
     $_SESSION['users_data'] = [
         'user_id' => $user['user_id'],
         'user_name' => $user['user_name'],
+        'login_time' => time() // ログイン時刻を記録
     ];
-    // ""で文字列を表示するときに{変数}で変数を直接埋め込める echoの必要なし
-    //  デバッグ
+    
+    // セッションの有効期限を設定（24時間）
+    ini_set('session.gc_maxlifetime', 86400);
+    session_set_cookie_params(86400);
+    
     $message = 'ログイン成功';
-    // echo var_dump($_session);
 } else {
     $message = 'ユーザー名かパスワードが間違っています。';
 }
