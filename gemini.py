@@ -66,11 +66,17 @@ def gemini_image_example():
         image_data2 = httpx.get(image_path)
         image_data = base64.b64encode(image_data2.content).decode("utf-8")
  
-        prompt = """画像の食材の個数を教えてください返り値は以下の例でお願いします。
-                 食材名は"""+food+"""ここから参照してください。ない場合はエラーとしてください。無駄な言葉はいりません
-#                返り値を配列として登録するのを想定していますので、以下の形式のみで出力すること。
-#                ["アボカド", 1],["いちご", 3],["オレンジ", 1]...
-#                """
+        prompt = """画像の食材の個数を教えてください。
+食材名は"""+food+"""ここから参照してください。
+
+重要:
+- 必ず以下の形式でJSON配列として出力すること
+- 余計な説明やマークダウン記法は一切付けないこと
+- 形式: [["食材名", 数量], ["食材名", 数量]]
+- 例: [["アボカド", 1], ["いちご", 3]]
+
+JSON配列のみを出力:
+"""
         response = model.generate_content([
             {'mime_type': 'image/png', 'data': image_data},
             prompt

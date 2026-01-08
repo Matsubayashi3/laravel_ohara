@@ -75,7 +75,7 @@ $id = $_SESSION['users_data']['user_id'];
     }
 
     .tab-3>label:hover {
-        opacity: .8;
+        background-color: #d9d9d9;
     }
 
     .tab-c {
@@ -335,7 +335,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -373,7 +373,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -411,7 +411,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -448,7 +448,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -485,7 +485,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -522,7 +522,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -559,7 +559,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -596,7 +596,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -633,7 +633,7 @@ $id = $_SESSION['users_data']['user_id'];
                             <?php echo $item['food_name'] ?>
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>">
+                                <input name="<?= $item['food_name'] ?>" type="number" class="textBox btn" value="<?= $item['count'] ?>" data-max="<?= $item['count'] ?>">
                                 <button type="button" class="btn btn-primary up">+</button>
                             </div>
                         </div>
@@ -668,6 +668,7 @@ $id = $_SESSION['users_data']['user_id'];
 
         // 初期値設定
         let num = parseInt(box.value) || 0;
+        const maxStock = parseInt(box.getAttribute('data-max')) || num;
         box.value = num;
 
         down.addEventListener('click', () => {
@@ -678,8 +679,10 @@ $id = $_SESSION['users_data']['user_id'];
         });
 
         up.addEventListener('click', () => {
-            num++;
-            box.value = num;
+            if (num < maxStock) {
+                num++;
+                box.value = num;
+            }
         });
     });
 

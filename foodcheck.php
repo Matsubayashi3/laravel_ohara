@@ -168,6 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
         /* 10pxから縮小 */
         border: 1px solid #eee;
         /* 境界線を追加 */
+        background-color: white;
         margin-bottom: 8px;
         /* 10pxから縮小 */
         width: 100%;
@@ -224,28 +225,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
 
     /* 数値操作ボタンのサイズを縮小 */
     .btn-group button {
-        font-size: 1em;
-        /* 25pxから縮小 */
-        padding: 0 8px;
-        /* 0 14pxから縮小 */
+        font-size: 18px;
+        padding: 0 10px;
         cursor: pointer;
         user-select: none;
+    }
+
+    .btn-primary {
+        border-radius: 4px !important;
     }
 
     /* 数値入力欄のサイズを縮小 */
     .textBox {
         border: none;
-        background: none;
-        font-size: 1em;
-        /* 18pxから縮小 */
+        font-size: 16px;
         text-align: center;
         width: 50px;
-        background-color: #fff !important;
-        /* 70pxから縮小 */
-    }
-
-    .textBox:hover {
-        background-color: #fff !important;
+        background-color: #fff;
+        pointer-events: none;
+        user-select: none;
     }
 
     /* 変更・削除ボタンのサイズを縮小 */
@@ -298,6 +296,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
 
     a {
         text-decoration: none;
+    }
+
+    .back-btn {
+        background-color: #E97132;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        margin-top: 20px;
+        margin-left: 30px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+
+    .back-btn:hover {
+        color: white;
+        background-color: #E97132;
     }
 
     .btn-right {
@@ -394,6 +408,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
 </style>
 
 <body>
+    <a href="camera-input.php"><button class="back-btn">戻る</button></a>
     <h4 style="text-align: center;">追加食材確認</h4>
 
     <form action="foodcheck.php" method="post">
@@ -418,7 +433,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
 
                 // 画像パスを決定（food_idがあればそれを使用、なければデフォルト）
                 if ($food_info) {
-                    $image_path = "image/食材/{$food_info['food_id']}.jpg";
+                    $image_path = "image/食材/{$food_info['food_id']}.png";
                     // 画像ファイルが存在しない場合はデフォルト画像を使用
                     if (!file_exists($image_path)) {
                         $image_path = "image/yasai.png";

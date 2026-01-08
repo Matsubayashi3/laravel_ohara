@@ -133,7 +133,7 @@ requireLogin();
     <!-- ファイル選択から画像 -->
     <div class="color">
         <!-- ▼▼▼ onsubmit属性を変更 ▼▼▼ -->
-        <form id="file-select-form" action="camera-output.php" method='post' enctype="multipart/form-data" style=" text-align:center;" onsubmit="showFullScreenLoading()">
+        <form id="file-select-form" action="camera-output.php" method='post' enctype="multipart/form-data" style=" text-align:center;" onsubmit="return showFullScreenLoading()">
             <img id="preview" style="display:none; max-width:300px;">
             <input type="file" accept="image/*" onchange="showPreview(this)" name="file">
             <input type='submit' class="upload" value='アップロード'>

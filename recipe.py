@@ -35,7 +35,7 @@ def gemini_recipe_example():
         
         model = genai.GenerativeModel("gemini-2.5-flash")
         prompt = "冷蔵庫にある食材からレシピを提案してください" + str(food_items) + \
-         "これらの食材を使った簡単で美味しい料理のレシピを1つ教えてください。" \
+         "これらの食材を使った簡単で美味しい料理のレシピを1つ教えてください。実在する日本の家庭的な料理にしてほしい。" \
          '文字列として改行せず出力してください。' \
          '形式: [["料理名"],["食材名", 数量], ["食材名", 数量], ...]]]'
         response = model.generate_content([prompt])

@@ -142,7 +142,10 @@ $data = json_decode($json, true);
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php else: ?>
-            <p style="text-align: center; margin-top: 50px;">レシピが見つかりませんでした。</p>
+            <div style="width: 100%; text-align: center;">
+                <p style="margin-top: 50px; margin-bottom: 20px;">レシピが見つかりませんでした。</p>
+                <a href="suggestion.php"><button style="background-color: #E97132; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">もう一度検索する</button></a>
+            </div>
         <?php endif; ?>
     </div>
 
