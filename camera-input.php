@@ -32,6 +32,7 @@
         background-color: #E97132;
         color: white;
         border: none;
+        border-radius: 8px;
     }
 
     input[type="file"] {
@@ -49,7 +50,11 @@
         margin-top: 20px;
         margin-left: 30px;
         color: white;
-        border-radius: 0;
+    }
+
+    .btn:hover {
+        color: white;
+        background-color: #E97132;
     }
 
     /* ▼▼▼ ここから全画面ローディングのスタイルを追加 ▼▼▼ */

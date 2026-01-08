@@ -35,6 +35,7 @@ $data = json_decode($json, true);
         border: none;
         padding: 10px 20px;
         margin-bottom: 20px;
+        border-radius: 8px;
     }
 
     /* .navbar内の.container-fluidをflexコンテナにし、子要素を中央に配置 */

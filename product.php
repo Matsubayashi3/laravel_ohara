@@ -147,6 +147,17 @@ $id = $_SESSION['users_data']['user_id'];
         font-size: 18px;
         text-align: center;
         width: 70px;
+        background-color: #fff;
+    }
+
+    .textBox {
+        border: none;
+        font-size: 18px;
+        text-align: center;
+        width: 70px;
+        background-color: #fff;
+        pointer-events: none;
+        user-select: none;
     }
 
     /* [input type="number"]のデフォルトの矢印を消す */
@@ -163,6 +174,7 @@ $id = $_SESSION['users_data']['user_id'];
         border: none;
         padding: 8px 16px;
         background-color: #E97132;
+        border-radius: 8px;
     }
 
     .huton {
@@ -177,10 +189,11 @@ $id = $_SESSION['users_data']['user_id'];
         background-color: #E97132;
         color: #fff;
         border: none;
-        padding: 10px 20px;
+        padding: 5px 10px;
         margin-top: 20px;
         margin-left: 30px;
         margin-bottom: 20px;
+        border-radius: 8px;
     }
 
     /* タブレット表示 (768px以下) */
@@ -220,6 +233,7 @@ $id = $_SESSION['users_data']['user_id'];
             /* 入力欄の文字サイズを小さく */
             width: 40px;
             /* 入力欄の幅を狭く */
+            background-color: #fff;
         }
 
         .btn-group {

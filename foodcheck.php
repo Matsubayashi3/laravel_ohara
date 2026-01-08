@@ -240,8 +240,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
         /* 18pxから縮小 */
         text-align: center;
         width: 50px;
-        background-color: #fff;
+        background-color: #fff !important;
         /* 70pxから縮小 */
+    }
+
+    .textBox:hover {
+        background-color: #fff !important;
     }
 
     /* 変更・削除ボタンのサイズを縮小 */
@@ -256,6 +260,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
 
         background-color: #E97132;
         color: white;
+        border: none;
+    }
+
+    .change-btn:hover,
+    .delete-btn:hover {
+        background-color: #D85A1F !important;
+        color: white !important;
     }
 
     /* [input type="number"]のデフォルトの矢印を消す */
@@ -272,6 +283,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
         color: white;
         padding: 8px 16px;
         background-color: #E97132;
+        border-radius: 9px;
+        border: none;
     }
 
     .huton {
@@ -444,8 +457,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
                             <!-- 数値操作 -->
                             <div class="btn-group" role="group" aria-label="数量操作">
                                 <button type="button" class="btn btn-primary down">-</button>
-                                <input name="food_count[<?= htmlspecialchars($food['name']) ?>]" type="number" class="textBox btn" value="<?= htmlspecialchars($food['count']) ?>">
+                                <span class="textBox btn"></span>
                                 <button type="button" class="btn btn-primary up">+</button>
+                                <input type="hidden" name="food_count[<?= htmlspecialchars($food['name']) ?>]" class="hidden-input" value="<?= htmlspecialchars($food['count']) ?>">
                                 <input type="hidden" name="food_name[]" value="<?= htmlspecialchars($food['name']) ?>">
                             </div>
 
@@ -474,13 +488,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
         const down = item.querySelector('.down');
         const up = item.querySelector('.up');
         const box = item.querySelector('.textBox');
+        const hiddenInput = item.querySelector('.hidden-input');
 
         // 初期値設定
-        let num = parseInt(box.value) || 0;
-        box.value = num;
+        let num = parseInt(hiddenInput.value) || 0;
+        box.textContent = num;
 
         down.addEventListener('touchstart', (event) => {
-            event.preventDefault(); // スクロール防止
+            event.preventDefault();
             down.click();
         }, {
             passive: false
@@ -488,38 +503,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_stock'])) {
         down.addEventListener('click', () => {
             if (num > 0) {
                 num--;
-                box.value = num;
+                box.textContent = num;
+                hiddenInput.value = num;
             }
         });
 
         up.addEventListener('touchstart', (event) => {
-            event.preventDefault(); // スクロール防止
+            event.preventDefault();
             up.click();
         }, {
             passive: false
         });
         up.addEventListener('click', () => {
             num++;
-            box.value = num;
+            box.textContent = num;
+            hiddenInput.value = num;
         });
 
-        // 変更ボタンと削除ボタンのイベントリスナー（必要に応じて追加）
-        const changeBtn = item.querySelector('.change-btn');
+        // 削除ボタンのイベントリスナー
         const deleteBtn = item.querySelector('.delete-btn');
 
-        changeBtn.addEventListener('click', () => {
-            // item-nameはitem-detailsの子要素になったため、セレクタを修正
-            alert(`「${item.querySelector('.item-name').textContent.trim()}」の数量を${box.value}に変更します。`);
-            // ここに変更処理を記述
-        });
-
-        deleteBtn.addEventListener('click', () => {
-            // item-nameはitem-detailsの子要素になったため、セレクタを修正
-            if (confirm(`「${item.querySelector('.item-name').textContent.trim()}」を削除しますか？`)) {
-                // ここに削除処理を記述
-                item.remove(); // 例として要素を削除
-            }
-        });
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', () => {
+                if (confirm(`「${item.querySelector('.item-name').textContent.trim()}」を削除しますか？`)) {
+                    item.remove();
+                }
+            });
+        }
     });
 </script>
 
