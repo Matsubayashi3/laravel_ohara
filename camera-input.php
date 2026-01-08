@@ -47,9 +47,13 @@
 
     .btn {
         background-color: #E97132;
+        color: white;
+        border: none;
+        padding: 6px 12px;
         margin-top: 20px;
         margin-left: 30px;
-        color: white;
+        margin-bottom: 20px;
+        border-radius: 8px;
     }
 
     .btn:hover {

@@ -190,7 +190,7 @@ $id = $_SESSION['users_data']['user_id'];
         background-color: #E97132;
         color: #fff;
         border: none;
-        padding: 5px 10px;
+        padding: 6px 12px;
         margin-top: 20px;
         margin-left: 30px;
         margin-bottom: 20px;
