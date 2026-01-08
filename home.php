@@ -3,6 +3,13 @@
 <?php session_start(); ?>
 <!-- ヘッダーの読み込み -->
 <?php include 'header.php' ?>
+<!-- 認証チェック機能の読み込み -->
+<?php include 'auth_check.php' ?>
+
+<?php
+// 既にログイン済みの場合はselect.phpにリダイレクト
+redirectIfLoggedIn();
+?>
 
 
 <!-- ページ -->

@@ -3,6 +3,13 @@
 <?php session_start(); ?>
 <!-- ヘッダーの読み込み -->
 <?php include 'header.php' ?>
+<!-- 認証チェック機能の読み込み -->
+<?php include 'auth_check.php' ?>
+
+<?php
+// ログインチェック
+requireLogin();
+?>
 
 
 <!-- ページ -->
@@ -72,12 +79,43 @@
         border: none;
     }
 
+    .user-info {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: white;
+        padding: 10px 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .user-info p {
+        margin: 0 0 5px 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .logout-link {
+        color: #DD6E35;
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    .logout-link:hover {
+        text-decoration: underline;
+    }
+
     a {
         text-decoration: none;
     }
 </style>
 
 <div class="container">
+    <div class="user-info">
+        <p>こんにちは、<?php echo h($_SESSION['users_data']['user_name']); ?>さん</p>
+        <a href="logout.php" class="logout-link">ログアウト</a>
+    </div>
     <div class="eye-g">
         <div class="eye"></div>
         <div class="eye"></div>

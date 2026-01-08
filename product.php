@@ -7,19 +7,15 @@
 
 <!-- DB接続ファイルの読み込み -->
 <?php include 'dbconect.php' ?>
+<!-- 認証チェック機能の読み込み -->
+<?php include 'auth_check.php' ?>
 
 <?php
-// $_SESSION['user_id']が設定されていない場合のWarning対策
-// ログイン機能が未実装、またはログインしていない状態でアクセスされた場合を想定し、
-// 暫定的にuser_idを1に設定するか、適切なエラー処理を行う。
-// ここでは、user_idが未設定の場合は0として、SQL側で対応できるようにする。
-// ただし、stock_dataのuser_idはINT UNSIGNED NOT NULLなので、0は適切ではない可能性がある。
-// ログイン必須のページであればリダイレクトが望ましいが、ここでは暫定的に1を設定する。
-if (!isset($_SESSION['user_id'])) {
-    // 警告を避けるため、暫定的にテストユーザーID (1) を設定
-    // 実際の運用ではログインページへのリダイレクトが必要です
-    $_SESSION['user_id'] = 1;
-}
+// ログインチェック
+requireLogin();
+
+// ユーザーIDをセッションから取得
+$id = $_SESSION['users_data']['user_id'];
 ?>
 
 
@@ -45,8 +41,6 @@ if (!isset($_SESSION['user_id'])) {
 //     //DBから商品データの取り出し
 //     $sql = $pdo->query('SELECT * FROM product');
 // }
-// //表示ブロック
-$id = $_SESSION['users_data']['user_id'];
 ?>
 
 <style>
@@ -92,7 +86,8 @@ $id = $_SESSION['users_data']['user_id'];
         display: none;
         width: 100%;
         /* padding: 1.5em 1em; */
-        background-color: #fff;
+        background-color: #FCC800;
+        padding-top: 25px;
     }
 
     .tab-3 label:has(:checked) {
@@ -246,6 +241,65 @@ $id = $_SESSION['users_data']['user_id'];
         .food-container {
             gap: 15px;
         }
+    }
+
+    /* ローディング画面 */
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #FCC800;
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loading-content {
+        text-align: center;
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .spinner {
+        border: 6px solid white;
+        border-top: 6px solid #E97132;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+        background-color: white;
+    }
+
+    .loading-text {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin: 0 0 20px 0;
+    }
+
+    .cancel-btn {
+        background-color: #ccc;
+        color: #333;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .cancel-btn:hover {
+        background-color: #bbb;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 </style>
 
@@ -592,7 +646,16 @@ $id = $_SESSION['users_data']['user_id'];
     </div>
 
     <div class="huton">
-        <a href="suggestion.php"><button class="suggestion ">レシピ検索</button></a>
+        <a href="suggestion.php" id="recipe-search"><button class="suggestion ">レシピ検索</button></a>
+    </div>
+
+    <!-- ローディング画面 -->
+    <div class="loading-overlay" id="loading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="loading-text">レシピを検索中...</p>
+            <button class="cancel-btn" id="cancel-btn">キャンセル</button>
+        </div>
     </div>
 
 </body>
@@ -618,6 +681,22 @@ $id = $_SESSION['users_data']['user_id'];
             num++;
             box.value = num;
         });
+    });
+
+    // レシピ検索ボタンのローディング処理
+    let searchTimeout;
+    document.getElementById('recipe-search').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('loading').style.display = 'flex';
+        searchTimeout = setTimeout(() => {
+            window.location.href = 'suggestion.php';
+        }, 3000);
+    });
+
+    // キャンセルボタンの処理
+    document.getElementById('cancel-btn').addEventListener('click', function() {
+        clearTimeout(searchTimeout);
+        document.getElementById('loading').style.display = 'none';
     });
 </script>
 

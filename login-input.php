@@ -5,6 +5,13 @@
 <?php include 'header.php' ?>
 <!-- DB接続ファイルの読み込み -->
 <?php include 'dbconect.php' ?>
+<!-- 認証チェック機能の読み込み -->
+<?php include 'auth_check.php' ?>
+
+<?php
+// 既にログイン済みの場合はリダイレクト
+redirectIfLoggedIn();
+?>
 
 <style>
     body {
