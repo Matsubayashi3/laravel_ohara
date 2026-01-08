@@ -31,7 +31,7 @@ def gemini_recipe_example():
         food_items = cursor.fetchall()
         # print(food_items)
         # genai.configure(api_key="AIzaSyD5eSZoK_qCu6vgsmybbqmlMRqpcea62Ds")
-        genai.configure(api_key="AIzaSyD4vBXreTog5iqkPJ8Q35hk3ONTRi3HoBs")
+        genai.configure(api_key="AIzaSyD5eSZoK_qCu6vgsmybbqmlMRqpcea62Ds")
         
         model = genai.GenerativeModel("gemini-2.5-flash")
         prompt = "冷蔵庫にある食材からレシピを提案してください" + str(food_items) + \
@@ -43,7 +43,7 @@ def gemini_recipe_example():
         print(foods)
         
         # APIキー設定
-        genai.configure(api_key="AIzaSyD4vBXreTog5iqkPJ8Q35hk3ONTRi3HoBs")
+        genai.configure(api_key="AIzaSyD5eSZoK_qCu6vgsmybbqmlMRqpcea62Ds")
 
         # モデル指定
         model = genai.GenerativeModel("gemini-2.5-flash-image")

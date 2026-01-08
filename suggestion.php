@@ -128,18 +128,22 @@ $data = json_decode($json, true);
 
     <!-- レシピ -->
     <div class="image-container">
-        <?php foreach ($data as $index => $item): ?>
-            <?php if ($index === 0): ?>
-                <!-- 料理名 -->
-                <img style="width:500px; height:auto;" src="image/recipe/<?= $id ?>.jpg" alt="料理画像">
-                <h2 style="text-align: center; margin-top: 20px;"><?php echo $item[0]; ?></h2>
-            <?php else: ?>
-                <!-- 料理画像と必要材料・分量 -->
-                <div class="image-item">
-                    <div class="caption"><?php echo ($item[0] . ' - ' . $item[1]); ?></div>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
+        <?php if ($data && is_array($data)): ?>
+            <?php foreach ($data as $index => $item): ?>
+                <?php if ($index === 0): ?>
+                    <!-- 料理名 -->
+                    <img style="width:500px; height:auto;" src="image/recipe/<?= $id ?>.jpg" alt="料理画像">
+                    <h2 style="text-align: center; margin-top: 20px;"><?php echo $item[0]; ?></h2>
+                <?php else: ?>
+                    <!-- 料理画像と必要材料・分量 -->
+                    <div class="image-item">
+                        <div class="caption"><?php echo ($item[0] . ' - ' . $item[1]); ?></div>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p style="text-align: center; margin-top: 50px;">レシピが見つかりませんでした。</p>
+        <?php endif; ?>
     </div>
 
     <!-- フッターの読み込み -->
