@@ -247,6 +247,51 @@ $id = $_SESSION['users_data']['user_id'];
             gap: 15px;
         }
     }
+
+    /* ローディング画面 */
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #FCC800;
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loading-content {
+        text-align: center;
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .spinner {
+        border: 6px solid white;
+        border-top: 6px solid #E97132;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+        background-color: white;
+    }
+
+    .loading-text {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 
 <body>
@@ -592,7 +637,15 @@ $id = $_SESSION['users_data']['user_id'];
     </div>
 
     <div class="huton">
-        <a href="suggestion.php"><button class="suggestion ">レシピ検索</button></a>
+        <a href="suggestion.php" id="recipe-search"><button class="suggestion ">レシピ検索</button></a>
+    </div>
+
+    <!-- ローディング画面 -->
+    <div class="loading-overlay" id="loading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="loading-text">レシピを検索中...</p>
+        </div>
     </div>
 
 </body>
@@ -618,6 +671,15 @@ $id = $_SESSION['users_data']['user_id'];
             num++;
             box.value = num;
         });
+    });
+
+    // レシピ検索ボタンのローディング処理
+    document.getElementById('recipe-search').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('loading').style.display = 'flex';
+        setTimeout(() => {
+            window.location.href = 'suggestion.php';
+        }, 100);
     });
 </script>
 
